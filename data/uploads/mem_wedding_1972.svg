@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a00e0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8e2de2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#grad)" rx="16"/>
+  <!-- Decorative photo frame -->
+  <rect x="40" y="40" width="720" height="420" fill="#ffffff" fill-opacity="0.9" rx="12" filter="url(#shadow)"/>
+  <rect x="60" y="60" width="680" height="320" fill="#f4efe6" rx="8"/>
+  <circle cx="400" cy="200" r="70" fill="#8e2de2" fill-opacity="0.3"/>
+  <path d="M 370 230 C 370 190, 430 190, 430 230 Z" fill="#8e2de2" fill-opacity="0.7"/>
+  <circle cx="400" cy="180" r="25" fill="#8e2de2" fill-opacity="0.8"/>
+  <!-- Text Label -->
+  <text x="400" y="415" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#333333" text-anchor="middle">Eleanor & Thomas Wedding</text>
+  <text x="400" y="445" font-family="Arial, sans-serif" font-size="18" fill="#666666" text-anchor="middle">June 1972 - St. Andrews Chapel, Boston</text>
+</svg>
