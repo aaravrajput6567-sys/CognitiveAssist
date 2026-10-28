@@ -15,7 +15,7 @@ import { getCardinalDirection, getRelativeTurn } from '../../engine/navigationLo
 import { TownScene3D } from '../3d/TownScene3D';
 import { NorthUpMapSvg } from '../svg/NorthUpMapSvg';
 import { Button } from '../common/Button';
-import { HelpCircle, RotateCcw, Check, Compass, Box } from 'lucide-react';
+import { HelpCircle, RotateCcw, Compass, Box, Sparkles, CheckCircle, ArrowRight } from 'lucide-react';
 
 interface ShortcutPhaseProps {
   graph: TownGraph;
@@ -60,8 +60,18 @@ export const ShortcutPhase: React.FC<ShortcutPhaseProps> = ({
   const [currentHintLevel, setCurrentHintLevel] = useState<number>(0);
   const [maxHintLevelUsed, setMaxHintLevelUsed] = useState<number>(0);
   const [supportMessage, setSupportMessage] = useState<string | null>(null);
+  const [isShortcutSuccess, setIsShortcutSuccess] = useState<boolean>(false);
+  const [shortcutSummary, setShortcutSummary] = useState<{
+    L_opt: number;
+    L_taken: number;
+    shortcutCompleted: boolean;
+    nErrors: number;
+    latencies: number[];
+    maxHintLevel: number;
+  } | null>(null);
 
   const stepStartTimeRef = useRef<number>(performance.now());
+  const completedRef = useRef<boolean>(false);
 
   const startLandmark = graph.junctions[problem.startJunctionId]?.landmark;
   const goalLandmark = graph.junctions[problem.goalJunctionId]?.landmark;
@@ -111,7 +121,7 @@ export const ShortcutPhase: React.FC<ShortcutPhaseProps> = ({
   };
 
   const handleJunctionTap = (tappedId: string) => {
-    if (isMoving) return;
+    if (isMoving || isShortcutSuccess) return;
 
     const latencyMs = Math.max(100, Math.round(performance.now() - stepStartTimeRef.current));
     stepStartTimeRef.current = performance.now();
@@ -147,7 +157,8 @@ export const ShortcutPhase: React.FC<ShortcutPhaseProps> = ({
 
     setTargetJunctionId(tappedId);
     setIsMoving(true);
-    setSupportMessage(null);
+    const destinationLandmark = graph.junctions[tappedId]?.landmark;
+    setSupportMessage(`✓ Heading towards the ${destinationLandmark?.name ?? 'next landmark'}...`);
   };
 
   const handleWalkStepComplete = () => {
@@ -161,17 +172,24 @@ export const ShortcutPhase: React.FC<ShortcutPhaseProps> = ({
 
     // Check if goal reached!
     if (reachedGoal) {
-      const L_taken = updatedPath.length - 1;
-      setTimeout(() => {
-        onComplete({
+      if (!completedRef.current) {
+        completedRef.current = true;
+        const L_taken = updatedPath.length - 1;
+        const summary = {
           L_opt: problem.optimalLength,
           L_taken,
           shortcutCompleted: true,
           nErrors,
           latencies,
           maxHintLevel: maxHintLevelUsed,
-        });
-      }, 700);
+        };
+        setShortcutSummary(summary);
+        setIsShortcutSuccess(true);
+
+        if (speechEnabled) {
+          speechService.speak(`Goal reached! You navigated safely to the ${goalLandmark?.name}.`);
+        }
+      }
     }
   };
 
@@ -340,10 +358,52 @@ export const ShortcutPhase: React.FC<ShortcutPhaseProps> = ({
         </button>
       </div>
 
-      {isGoalReached && (
-        <div className="mt-4 p-4 rounded-2xl bg-emerald-100 dark:bg-emerald-950 border-2 border-emerald-500 text-emerald-900 dark:text-emerald-100 text-2xl font-bold flex items-center justify-center gap-2 animate-fade-in">
-          <Check size={28} />
-          <span>You found the direct shortcut to the {goalLandmark?.name}!</span>
+      {/* Shortcut Success Modal */}
+      {isShortcutSuccess && shortcutSummary && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-lg bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 text-center shadow-2xl border-4 border-emerald-500">
+            <div className="flex justify-center mb-4 text-emerald-500">
+              <Sparkles size={56} className="animate-bounce" />
+            </div>
+
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold text-lg mb-3">
+              <CheckCircle size={22} />
+              <span>Direct Shortcut Discovered!</span>
+            </div>
+
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-stone-900 dark:text-stone-100 mb-2">
+              Goal Reached!
+            </h3>
+
+            <p className="text-xl text-stone-600 dark:text-stone-300 mb-6 font-medium">
+              Brilliant spatial reasoning! You guided Arthur safely straight to the {goalLandmark?.name}!
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 mb-6 text-left">
+              <div className="p-4 rounded-2xl bg-amber-50 dark:bg-stone-800 border-2 border-amber-200 dark:border-stone-700">
+                <div className="text-sm font-semibold text-stone-500 dark:text-stone-400">Steps Taken</div>
+                <div className="text-2xl font-black text-amber-700 dark:text-amber-400">
+                  {shortcutSummary.L_taken} steps (Best: {shortcutSummary.L_opt})
+                </div>
+              </div>
+              <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-stone-800 border-2 border-emerald-200 dark:border-stone-700">
+                <div className="text-sm font-semibold text-stone-500 dark:text-stone-400">Path Efficiency</div>
+                <div className="text-2xl font-black text-emerald-700 dark:text-emerald-400">
+                  {Math.round((shortcutSummary.L_opt / Math.max(1, shortcutSummary.L_taken)) * 100)}%
+                </div>
+              </div>
+            </div>
+
+            <Button
+              variant="primary"
+              size="large"
+              icon={<ArrowRight size={28} />}
+              onClick={() => onComplete(shortcutSummary)}
+              className="w-full py-5 text-2xl font-bold shadow-xl"
+            >
+              Continue to Next Walk →
+            </Button>
+          </div>
         </div>
       )}
     </div>

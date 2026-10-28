@@ -102,6 +102,7 @@ export const TownScene3D: React.FC<TownScene3DProps> = ({
     raycaster: THREE.Raycaster;
     mouse: THREE.Vector2;
     walkProgress: number; // 0 to 1
+    walkStepCompleted: boolean;
     startWorldPos: { x: number; z: number };
     targetWorldPos: { x: number; z: number };
     currentWorldPos: { x: number; z: number };
@@ -118,6 +119,7 @@ export const TownScene3D: React.FC<TownScene3DProps> = ({
     raycaster: new THREE.Raycaster(),
     mouse: new THREE.Vector2(),
     walkProgress: 0,
+    walkStepCompleted: false,
     startWorldPos: { x: 0, z: 0 },
     targetWorldPos: { x: 0, z: 0 },
     currentWorldPos: { x: 0, z: 0 },
@@ -286,12 +288,13 @@ export const TownScene3D: React.FC<TownScene3DProps> = ({
         onWalkStepComplete: activeOnComplete,
       } = propsRef.current;
 
-      if (activeMoving && activeTargetId) {
+      if (activeMoving && activeTargetId && !state.walkStepCompleted) {
         // Fast, responsive walk speed (~0.9s per street segment)
         state.walkProgress += deltaSec * 1.25;
 
         if (state.walkProgress >= 1.0) {
           state.walkProgress = 1.0;
+          state.walkStepCompleted = true; // Guard against multiple triggers
           state.currentWorldPos = { ...state.targetWorldPos };
           state.arthur.root.position.set(state.targetWorldPos.x, 0, state.targetWorldPos.z);
           updateArthurAnimation(state.arthur, deltaSec, false, 5.0, false);
@@ -379,8 +382,17 @@ export const TownScene3D: React.FC<TownScene3DProps> = ({
     return () => {
       cancelAnimationFrame(stateRef.current.animationFrameId);
       resizeObserver.disconnect();
-      renderer.dispose();
-      scene.clear();
+      if (stateRef.current.renderer) {
+        stateRef.current.renderer.dispose();
+        stateRef.current.renderer = null;
+      }
+      if (stateRef.current.scene) {
+        stateRef.current.scene.clear();
+        stateRef.current.scene = null;
+      }
+      stateRef.current.camera = null;
+      stateRef.current.world = null;
+      stateRef.current.arthur = null;
     };
   }, [graph, getPosForJunction]);
 
@@ -393,6 +405,7 @@ export const TownScene3D: React.FC<TownScene3DProps> = ({
       const targetPos = getPosForJunction(targetJunctionId);
       stateRef.current.targetWorldPos = { ...targetPos };
       stateRef.current.walkProgress = 0;
+      stateRef.current.walkStepCompleted = false;
 
       // Compute exact heading angle towards targetPos in 3D
       const dx = targetPos.x - startPos.x;
@@ -400,6 +413,7 @@ export const TownScene3D: React.FC<TownScene3DProps> = ({
       const angle = Math.atan2(-dx, -dz);
       stateRef.current.targetHeadingAngle = angle;
     } else {
+      stateRef.current.walkStepCompleted = false;
       stateRef.current.targetWorldPos = { ...startPos };
       stateRef.current.currentWorldPos = { ...startPos };
       const baseDeg = CARDINAL_ANGLES[currentHeading] || 0;
@@ -442,11 +456,12 @@ export const TownScene3D: React.FC<TownScene3DProps> = ({
 
   // Handle Raycasting Pointer Click on 3D road arrows
   const handlePointerDown = (event: React.PointerEvent<HTMLCanvasElement>) => {
-    if (!canvasRef.current || !stateRef.current.camera || !stateRef.current.world || isMoving || isRewinding) {
+    if (!canvasRef.current || !stateRef.current.camera || !stateRef.current.world || !stateRef.current.scene || isMoving || isRewinding) {
       return;
     }
 
     const rect = canvasRef.current.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
     const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
@@ -471,11 +486,12 @@ export const TownScene3D: React.FC<TownScene3DProps> = ({
 
   // Handle pointer move for hover effect on 3D arrows
   const handlePointerMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
-    if (!canvasRef.current || !stateRef.current.camera || !stateRef.current.world || isMoving || isRewinding) {
+    if (!canvasRef.current || !stateRef.current.camera || !stateRef.current.world || !stateRef.current.scene || isMoving || isRewinding) {
       return;
     }
 
     const rect = canvasRef.current.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
     const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 

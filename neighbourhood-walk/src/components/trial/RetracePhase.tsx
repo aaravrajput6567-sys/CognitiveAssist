@@ -6,18 +6,27 @@
  * - Interactive 3D road arrows (Left, Straight, Right) AND large touch buttons below.
  * - Arthur physically walks down the chosen street!
  * - Dignified auto-rewind on non-matching path: Arthur stops, shakes head, and strolls back.
+ * - Positive immediate success feedback on correct turns and celebratory completion modal.
  * - Zero buzzers, zero red crosses, zero negative words.
  */
 
 import React, { useState, useEffect, useRef } from 'react';
 import type { Route } from '../../types/trial';
 import type { TownGraph, RelativeDirection } from '../../types/graph';
-import { getTurnLabel, getIncomingHeading } from '../../engine/navigationLogic';
+import { getTurnLabel, getIncomingHeading, getRelativeTurn } from '../../engine/navigationLogic';
 import { MESSAGE_SERVICE } from '../../services/messageService';
 import { speechService } from '../../services/speechService';
 import { TownScene3D } from '../3d/TownScene3D';
 import { Button } from '../common/Button';
-import { ArrowLeft, ArrowUp, ArrowRight, HelpCircle, Footprints } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowUp,
+  ArrowRight,
+  HelpCircle,
+  Footprints,
+  Sparkles,
+  CheckCircle,
+} from 'lucide-react';
 
 interface RetracePhaseProps {
   graph: TownGraph;
@@ -60,16 +69,56 @@ export const RetracePhase: React.FC<RetracePhaseProps> = ({
   const [currentHintLevel, setCurrentHintLevel] = useState<number>(0);
   const [maxHintLevelUsed, setMaxHintLevelUsed] = useState<number>(0);
   const [supportMessage, setSupportMessage] = useState<string | null>(null);
+  const [isSuccessFeedback, setIsSuccessFeedback] = useState<boolean>(false);
   const [isRewinding, setIsRewinding] = useState<boolean>(false);
   const [isMoving, setIsMoving] = useState<boolean>(false);
   const [movingDirection, setMovingDirection] = useState<RelativeDirection | null>(null);
 
-  const stepStartTimeRef = useRef<number>(performance.now());
-  const currentStep = route.steps[currentStepIdx]!;
-  const incomingHeading = getIncomingHeading(currentStep.outgoingDirection, currentStep.relativeTurn);
+  // Walk completion state
+  const [isWalkSuccess, setIsWalkSuccess] = useState<boolean>(false);
+  const [summaryResult, setSummaryResult] = useState<{
+    firstAttemptCorrectCount: number;
+    totalDecisions: number;
+    nErrors: number;
+    latencies: number[];
+    maxHintLevel: number;
+  } | null>(null);
 
-  // Available turn choices at this crossroads
-  const availableChoices: RelativeDirection[] = ['left', 'straight', 'right'];
+  const stepStartTimeRef = useRef<number>(performance.now());
+  const completedRef = useRef<boolean>(false);
+
+  // Safeguard step indexing
+  const safeStepIdx = Math.min(currentStepIdx, Math.max(0, route.steps.length - 1));
+  const currentStep = route.steps[safeStepIdx] || route.steps[0];
+  const incomingHeading = currentStep
+    ? getIncomingHeading(currentStep.outgoingDirection, currentStep.relativeTurn)
+    : 'N';
+
+  // Dynamically compute available choices at this crossroads
+  const currentJunction = currentStep ? graph.junctions[currentStep.junctionId] : null;
+  const dynamicTurns: RelativeDirection[] = [];
+  if (currentJunction) {
+    for (const dir of ['N', 'E', 'S', 'W'] as const) {
+      if (currentJunction.neighbors[dir]) {
+        const turn = getRelativeTurn(incomingHeading, dir);
+        if (!dynamicTurns.includes(turn) && turn !== 'u-turn') {
+          dynamicTurns.push(turn);
+        }
+      }
+    }
+  }
+  if (currentStep && !dynamicTurns.includes(currentStep.relativeTurn)) {
+    dynamicTurns.push(currentStep.relativeTurn);
+  }
+  // Standard 3 choices fallback
+  const standardChoices: RelativeDirection[] = ['left', 'straight', 'right'];
+  for (const choice of standardChoices) {
+    if (dynamicTurns.length < 3 && !dynamicTurns.includes(choice)) {
+      dynamicTurns.push(choice);
+    }
+  }
+  // Sort in standard order: left, straight, right
+  const availableChoices = standardChoices.filter((c) => dynamicTurns.includes(c));
 
   useEffect(() => {
     stepStartTimeRef.current = performance.now();
@@ -77,10 +126,14 @@ export const RetracePhase: React.FC<RetracePhaseProps> = ({
     setIsRewinding(false);
     setIsMoving(false);
     setMovingDirection(null);
-  }, [currentStepIdx]);
+  }, [safeStepIdx]);
+
+  if (!currentStep) {
+    return null;
+  }
 
   const handleTurnChoice = (chosenTurn: RelativeDirection) => {
-    if (isRewinding || isMoving) return;
+    if (isRewinding || isMoving || isWalkSuccess) return;
 
     const latencyMs = Math.max(100, Math.round(performance.now() - stepStartTimeRef.current));
     const isCorrect = chosenTurn === currentStep.relativeTurn;
@@ -95,24 +148,36 @@ export const RetracePhase: React.FC<RetracePhaseProps> = ({
 
     setLatencies((prev) => [...prev, latencyMs]);
 
+    let updatedCorrectCount = firstAttemptCorrectCount;
     if (!firstAttemptMadeOnCurrentStep) {
       setFirstAttemptMadeOnCurrentStep(true);
       if (isCorrect) {
-        setFirstAttemptCorrectCount((prev) => prev + 1);
+        updatedCorrectCount += 1;
+        setFirstAttemptCorrectCount(updatedCorrectCount);
       }
     }
 
     if (isCorrect) {
-      // Correct decision: Arthur walks forward to the next landmark!
-      setSupportMessage(null);
+      // Positive immediate feedback on correct decision!
+      const nextLandmark = graph.junctions[currentStep.nextJunctionId]?.landmark;
+      const targetName = nextLandmark?.name ?? 'the next landmark';
+      const successMsg = `🌟 Spot on! Turning ${getTurnLabel(chosenTurn).toLowerCase()} towards the ${targetName}!`;
+      setSupportMessage(successMsg);
+      setIsSuccessFeedback(true);
+
+      if (speechEnabled) {
+        speechService.speak(`Spot on! Turning towards the ${targetName}.`);
+      }
+
       setCurrentHintLevel(0);
       setMovingDirection(chosenTurn);
       setIsMoving(true);
     } else {
-      // Wrong choice: dignified auto-rewind with task-attributive message
+      // Wrong choice: dignified auto-rewind with task-attributive encouragement
       setNErrors((prev) => prev + 1);
       setMovingDirection(chosenTurn);
       setIsRewinding(true);
+      setIsSuccessFeedback(false);
 
       const rewindMsg = MESSAGE_SERVICE.getRewindMessage(currentStep.landmark.name);
       setSupportMessage(rewindMsg);
@@ -133,16 +198,25 @@ export const RetracePhase: React.FC<RetracePhaseProps> = ({
   const handleWalkStepComplete = () => {
     setIsMoving(false);
     if (currentStepIdx < route.steps.length - 1) {
-      setCurrentStepIdx((prev) => prev + 1);
+      setCurrentStepIdx((prev) => Math.min(prev + 1, route.steps.length - 1));
     } else {
       // Completed all decisions on the retrace walk!
-      onComplete({
-        firstAttemptCorrectCount: firstAttemptCorrectCount + (firstAttemptMadeOnCurrentStep ? 0 : 1),
-        totalDecisions: route.steps.length,
-        nErrors,
-        latencies,
-        maxHintLevel: maxHintLevelUsed,
-      });
+      if (!completedRef.current) {
+        completedRef.current = true;
+        const result = {
+          firstAttemptCorrectCount,
+          totalDecisions: route.steps.length,
+          nErrors,
+          latencies,
+          maxHintLevel: maxHintLevelUsed,
+        };
+        setSummaryResult(result);
+        setIsWalkSuccess(true);
+
+        if (speechEnabled) {
+          speechService.speak('Walk completed successfully! Splendid navigation.');
+        }
+      }
     }
   };
 
@@ -160,6 +234,7 @@ export const RetracePhase: React.FC<RetracePhaseProps> = ({
       msg = MESSAGE_SERVICE.getL3Hint(getTurnLabel(currentStep.relativeTurn));
     }
     setSupportMessage(msg);
+    setIsSuccessFeedback(false);
 
     if (speechEnabled) {
       speechService.speak(msg);
@@ -191,10 +266,10 @@ export const RetracePhase: React.FC<RetracePhaseProps> = ({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-4 px-4 text-center select-none animate-fade-in">
+    <div className="w-full max-w-4xl mx-auto py-4 px-4 text-center select-none animate-fade-in relative">
       {/* Step Progress */}
       <div className="mb-2 text-xl font-bold text-stone-700 dark:text-stone-300">
-        Junction {currentStepIdx + 1} of {route.steps.length}
+        Junction {safeStepIdx + 1} of {route.steps.length}
       </div>
 
       <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 dark:text-stone-100 mb-2">
@@ -206,9 +281,15 @@ export const RetracePhase: React.FC<RetracePhaseProps> = ({
         <span>Tap a glowing arrow on the road or a button below</span>
       </p>
 
-      {/* Support / Rewind Message Banner */}
+      {/* Support / Feedback Message Banner */}
       {supportMessage && (
-        <div className="mb-4 p-4 rounded-2xl bg-amber-100 dark:bg-stone-800 border-2 border-amber-400 text-stone-900 dark:text-stone-100 text-xl font-semibold shadow-sm animate-fade-in">
+        <div
+          className={`mb-4 p-4 rounded-2xl text-xl font-semibold shadow-md animate-fade-in border-2 ${
+            isSuccessFeedback
+              ? 'bg-emerald-100 dark:bg-emerald-950 border-emerald-500 text-emerald-950 dark:text-emerald-100'
+              : 'bg-amber-100 dark:bg-stone-800 border-amber-400 text-stone-900 dark:text-stone-100'
+          }`}
+        >
           {supportMessage}
         </div>
       )}
@@ -244,7 +325,7 @@ export const RetracePhase: React.FC<RetracePhaseProps> = ({
               variant={isDirectGuidance ? 'secondary' : 'primary'}
               size="large"
               icon={getButtonIcon(turn)}
-              disabled={isRewinding || isMoving}
+              disabled={isRewinding || isMoving || isWalkSuccess}
               onClick={() => handleTurnChoice(turn)}
               className={`flex-1 py-5 text-2xl font-bold shadow-lg ${
                 isDirectGuidance ? 'ring-4 ring-emerald-400 animate-pulse' : ''
@@ -260,7 +341,7 @@ export const RetracePhase: React.FC<RetracePhaseProps> = ({
       <div className="flex justify-center">
         <button
           onClick={handleRequestHint}
-          disabled={currentHintLevel >= 3 || isRewinding || isMoving}
+          disabled={currentHintLevel >= 3 || isRewinding || isMoving || isWalkSuccess}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-lg font-semibold text-stone-700 dark:text-stone-300 bg-stone-200 dark:bg-stone-800 hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors cursor-pointer disabled:opacity-50"
           aria-label="Request a gentle hint"
         >
@@ -268,6 +349,55 @@ export const RetracePhase: React.FC<RetracePhaseProps> = ({
           <span>Need a gentle clue?</span>
         </button>
       </div>
+
+      {/* Walk Completion Success Celebration Modal */}
+      {isWalkSuccess && summaryResult && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-lg bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 text-center shadow-2xl border-4 border-emerald-500">
+            <div className="flex justify-center mb-4 text-emerald-500">
+              <Sparkles size={56} className="animate-bounce" />
+            </div>
+
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold text-lg mb-3">
+              <CheckCircle size={22} />
+              <span>Walk Completed Successfully!</span>
+            </div>
+
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-stone-900 dark:text-stone-100 mb-2">
+              Splendid Navigation!
+            </h3>
+
+            <p className="text-xl text-stone-600 dark:text-stone-300 mb-6 font-medium">
+              You safely guided Arthur through every crossroad to the destination!
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 mb-6 text-left">
+              <div className="p-4 rounded-2xl bg-amber-50 dark:bg-stone-800 border-2 border-amber-200 dark:border-stone-700">
+                <div className="text-sm font-semibold text-stone-500 dark:text-stone-400">First-Try Recalls</div>
+                <div className="text-2xl font-black text-amber-700 dark:text-amber-400">
+                  {summaryResult.firstAttemptCorrectCount} of {summaryResult.totalDecisions}
+                </div>
+              </div>
+              <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-stone-800 border-2 border-emerald-200 dark:border-stone-700">
+                <div className="text-sm font-semibold text-stone-500 dark:text-stone-400">Route Accuracy</div>
+                <div className="text-2xl font-black text-emerald-700 dark:text-emerald-400">
+                  {Math.round((summaryResult.firstAttemptCorrectCount / Math.max(1, summaryResult.totalDecisions)) * 100)}%
+                </div>
+              </div>
+            </div>
+
+            <Button
+              variant="primary"
+              size="large"
+              icon={<ArrowRight size={28} />}
+              onClick={() => onComplete(summaryResult)}
+              className="w-full py-5 text-2xl font-bold shadow-xl"
+            >
+              Continue to Next Walk →
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -38,20 +38,21 @@ export const EncodingPhase: React.FC<EncodingPhaseProps> = ({
   const [showingMapOverview, setShowingMapOverview] = useState<boolean>(false);
   const [clueMessage, setClueMessage] = useState<string | null>(null);
 
-  const step = route.steps[currentStepIdx]!;
-  const turnLabel = getTurnLabel(step.relativeTurn);
-  const instructionText = `${turnLabel} at the ${step.landmark.name}.`;
+  const safeStepIdx = Math.min(currentStepIdx, Math.max(0, route.steps.length - 1));
+  const step = route.steps[safeStepIdx] || route.steps[0];
+  const turnLabel = step ? getTurnLabel(step.relativeTurn) : 'Go Straight';
+  const instructionText = step ? `${turnLabel} at the ${step.landmark.name}.` : 'Continue along the path.';
 
   // Compute incoming heading so Arthur arrives facing the crossroads
-  const incomingHeading = getIncomingHeading(step.outgoingDirection, step.relativeTurn);
+  const incomingHeading = step ? getIncomingHeading(step.outgoingDirection, step.relativeTurn) : 'N';
 
   // Read aloud instruction on each step
   useEffect(() => {
     setClueMessage(null);
-    if (speechEnabled) {
+    if (speechEnabled && instructionText) {
       speechService.speak(instructionText);
     }
-  }, [currentStepIdx, speechEnabled, instructionText]);
+  }, [safeStepIdx, speechEnabled, instructionText]);
 
   // Gentle passive auto-advance after 8s if patient prefers not to tap (>= 4s constraint)
   useEffect(() => {
@@ -60,7 +61,7 @@ export const EncodingPhase: React.FC<EncodingPhaseProps> = ({
     }, 8000);
 
     return () => clearTimeout(timer);
-  }, [currentStepIdx, isMoving]);
+  }, [safeStepIdx, isMoving]);
 
   const advanceStep = () => {
     if (isMoving) return;
@@ -71,7 +72,7 @@ export const EncodingPhase: React.FC<EncodingPhaseProps> = ({
   const handleWalkStepComplete = () => {
     setIsMoving(false);
     if (currentStepIdx < route.steps.length - 1) {
-      setCurrentStepIdx((prev) => prev + 1);
+      setCurrentStepIdx((prev) => Math.min(prev + 1, route.steps.length - 1));
     } else {
       // Reached end of encoding walk
       if (encodingView === 'both' && !showingMapOverview) {
