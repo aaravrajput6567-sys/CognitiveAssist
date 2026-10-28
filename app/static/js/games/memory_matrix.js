@@ -101,7 +101,7 @@ class MemoryMatrixGame {
     const deck = [...chosenSymbols, ...chosenSymbols].sort(() => Math.random() - 0.5);
 
     this.container.innerHTML = "";
-    this.container.style.gridTemplateColumns = `repeat(${config.grid_cols}, 1fr)`;
+    this.container.style.gridTemplateColumns = `repeat(${config.grid_cols}, 95px)`;
 
     deck.forEach((symbol, index) => {
       const card = document.createElement("div");

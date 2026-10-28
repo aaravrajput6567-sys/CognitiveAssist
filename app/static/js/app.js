@@ -12,28 +12,165 @@ class AppController {
     this.currentFontIndex = 0; // Default to balanced standard font proportion
     this.isHighContrast = false;
 
+    this.initAuthAndRole();
     this.initNavigation();
     this.initAccessibility();
     this.initModals();
     this.initGameLaunchers();
   }
 
+  initAuthAndRole() {
+    this.userRole = (localStorage.getItem("ca_user_role") || "").toLowerCase();
+    this.userName = localStorage.getItem("ca_user_name");
+    const department = (localStorage.getItem("ca_clinical_department") || "physician").toLowerCase();
+
+    // If unauthenticated, redirect to login page
+    if (!this.userRole) {
+      window.location.href = "/login";
+      return;
+    }
+
+    const caregiverTab = document.getElementById("tab-caregiver");
+    const seniorTab = document.getElementById("tab-senior");
+    const userRoleBadge = document.getElementById("user-role-badge");
+    const userAvatarIcon = document.getElementById("user-avatar-icon");
+    const userDisplayName = document.getElementById("user-display-name");
+    const userPortalTag = document.getElementById("user-portal-tag");
+    const btnLogout = document.getElementById("btn-logout");
+
+    // Sign Out Handler
+    if (btnLogout) {
+      btnLogout.addEventListener("click", () => {
+        localStorage.removeItem("ca_user_role");
+        localStorage.removeItem("ca_user_name");
+        localStorage.removeItem("ca_user_id");
+        localStorage.removeItem("ca_auth_method");
+        localStorage.removeItem("ca_clinical_department");
+        localStorage.removeItem("ca_login_time");
+        window.location.href = "/login";
+      });
+    }
+
+    const isClinicalOrCaregiver =
+      this.userRole === "clinical" ||
+      this.userRole === "caregiver" ||
+      this.userRole === "doctor" ||
+      this.userRole === "admin";
+
+    if (this.userRole === "senior") {
+      // =====================================================================
+      // SENIOR ROLE: STRICT GAMES DASHBOARD ISOLATION
+      // Under no circumstance should senior see clinical reports or telemetry.
+      // =====================================================================
+      if (caregiverTab) caregiverTab.style.display = "none";
+      const caregiverSection = document.getElementById("view-caregiver");
+      if (caregiverSection) {
+        caregiverSection.style.display = "none";
+        caregiverSection.classList.remove("active");
+      }
+
+      if (userRoleBadge) {
+        userRoleBadge.className = "user-role-badge badge-senior";
+      }
+      if (userAvatarIcon) userAvatarIcon.textContent = "👵";
+      if (userDisplayName) userDisplayName.textContent = this.userName || "Eleanor Vance";
+      if (userPortalTag) userPortalTag.textContent = "Senior Hub";
+
+      // Always active senior portal
+      if (seniorTab) seniorTab.classList.add("active");
+      this.currentView = "senior-portal";
+
+    } else if (isClinicalOrCaregiver) {
+      // =====================================================================
+      // CLINICIAN / CAREGIVER ROLE
+      // Has full clinical access and can also test/inspect senior games.
+      // =====================================================================
+      if (caregiverTab) caregiverTab.style.display = "inline-flex";
+
+      if (userRoleBadge) {
+        userRoleBadge.className = "user-role-badge badge-clinical";
+      }
+      if (userAvatarIcon) userAvatarIcon.textContent = "🩺";
+      if (userDisplayName) userDisplayName.textContent = this.userName || "Dr. Richard Chen, MD";
+      if (userPortalTag) {
+        userPortalTag.textContent =
+          department === "caregiver" ? "Caregiver" : (department === "director" ? "Research Director" : "Clinical Lead");
+      }
+    }
+  }
+
   initNavigation() {
     const navTabs = document.querySelectorAll(".nav-tabs .tab-btn");
     navTabs.forEach(btn => {
       btn.addEventListener("click", () => {
+        const targetView = btn.dataset.view;
+        // Block senior from switching to clinical reports
+        if (this.userRole === "senior" && targetView === "caregiver-portal") {
+          return;
+        }
         navTabs.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
-        const targetView = btn.dataset.view;
         this.switchView(targetView);
       });
+    });
+
+    const isClinicalOrCaregiver =
+      this.userRole === "clinical" ||
+      this.userRole === "caregiver" ||
+      this.userRole === "doctor" ||
+      this.userRole === "admin";
+
+    // Support deep-linking via URL hash (#caregiver, #senior) or query parameter (?view=caregiver)
+    const applyRoute = () => {
+      const hash = (window.location.hash || "").toLowerCase();
+      const urlParams = new URLSearchParams(window.location.search);
+      const viewParam = (urlParams.get("view") || "").toLowerCase();
+
+      if (isClinicalOrCaregiver) {
+        if (hash.includes("senior") || viewParam === "senior") {
+          const seniorBtn = document.getElementById("tab-senior");
+          if (seniorBtn) {
+            navTabs.forEach(b => b.classList.remove("active"));
+            seniorBtn.classList.add("active");
+          }
+          this.switchView("senior-portal");
+        } else {
+          // Default to Caregiver Portal
+          const caregiverBtn = document.getElementById("tab-caregiver");
+          if (caregiverBtn) {
+            navTabs.forEach(b => b.classList.remove("active"));
+            caregiverBtn.classList.add("active");
+          }
+          this.switchView("caregiver-portal");
+        }
+      } else {
+        // Seniors are strictly routed to the Senior Hub
+        const seniorBtn = document.getElementById("tab-senior");
+        if (seniorBtn) {
+          navTabs.forEach(b => b.classList.remove("active"));
+          seniorBtn.classList.add("active");
+        }
+        this.switchView("senior-portal");
+      }
+    };
+
+    applyRoute();
+
+    window.addEventListener("hashchange", () => {
+      applyRoute();
     });
   }
 
   switchView(viewName) {
+    // Security check: seniors cannot access caregiver-portal
+    if (this.userRole === "senior" && viewName === "caregiver-portal") {
+      viewName = "senior-portal";
+    }
+
     this.currentView = viewName;
-    document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
-    
+    const sView = document.getElementById("view-senior");
+    const cView = document.getElementById("view-caregiver");
+
     // Hide game arena and show top row when leaving/switching views
     const arena = document.getElementById("game-arena");
     if (arena) arena.classList.remove("active");
@@ -41,15 +178,29 @@ class AppController {
     if (gameGrid) gameGrid.style.display = "grid";
     const topRow = document.getElementById("senior-hub-top-row");
     if (topRow) topRow.style.display = "flex";
-    const seniorView = document.getElementById("view-senior");
-    if (seniorView) seniorView.classList.remove("playing-game");
+    if (sView) sView.classList.remove("playing-game");
 
-    if (viewName === "senior-portal") {
-      document.getElementById("view-senior").classList.add("active");
-    } else if (viewName === "caregiver-portal") {
-      document.getElementById("view-caregiver").classList.add("active");
+    if (viewName === "caregiver-portal") {
+      if (this.userRole === "senior") return;
+      if (sView) {
+        sView.classList.remove("active");
+        sView.style.display = "none";
+      }
+      if (cView) {
+        cView.classList.add("active");
+        cView.style.display = "block";
+      }
       if (window.caregiverDashboard) {
         window.caregiverDashboard.loadAll();
+      }
+    } else {
+      if (cView) {
+        cView.classList.remove("active");
+        cView.style.display = "none";
+      }
+      if (sView) {
+        sView.classList.add("active");
+        sView.style.display = "block";
       }
     }
   }
@@ -184,6 +335,16 @@ class AppController {
       btnReminiscence.addEventListener("click", () => this.launchGame("reminiscence"));
     }
 
+    // Launch Morning Routine Builder
+    const btnRoutine = document.getElementById("btn-launch-routine");
+    if (btnRoutine) {
+      btnRoutine.addEventListener("click", (e) => {
+        // If user wants in-arena play
+        e.preventDefault();
+        this.launchGame("routine");
+      });
+    }
+
     // Back to Games Hub button
     const backBtn = document.getElementById("btn-back-to-games");
     if (backBtn) {
@@ -222,6 +383,9 @@ class AppController {
       document.getElementById("arena-reminiscence").style.display = "block";
       document.getElementById("arena-game-title").textContent = "Personal Family Reminiscence Therapy";
       if (window.reminiscenceQuizGame) window.reminiscenceQuizGame.init();
+    } else if (gameKey === "routine") {
+      document.getElementById("arena-routine").style.display = "block";
+      document.getElementById("arena-game-title").textContent = "Morning Routine Builder - Memory Training (Research Prototype)";
     }
   }
 

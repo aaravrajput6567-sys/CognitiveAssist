@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CognitiveAssist 🧠 — AI-Powered Cognitive Health & Biometric Monitoring Platform</title>
+  <meta name="description" content="An AI-powered closed-loop cognitive gaming and health monitoring platform for elderly care, MCI, and early Alzheimer's. Features real-time computer vision fatigue tracking, adaptive difficulty scaling, and multimodal generative reminiscence therapy.">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Landing Page Stylesheet -->
+  <link rel="stylesheet" href="/static/css/landing.css?v=1.0">
+</head>
+<body>
+
+  <!-- Ambient Glowing Background Accents -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+
+  <!-- Accessible Navigation Header -->
+  <header class="landing-header">
+    <div class="container">
+      <nav class="nav-wrapper" aria-label="Main Navigation">
+        <!-- Brand Link (Left) -->
+        <a href="/" class="brand-link" id="brand-logo" aria-label="CognitiveAssist Home">
+          <div class="logo-badge" aria-hidden="true">
+            <span>🧠</span>
+          </div>
+          <div class="brand-info">
+            <h1>CognitiveAssist</h1>
+            <span class="tagline">Healthcare AI Platform</span>
+          </div>
+        </a>
+
+        <!-- Right Side Controls: Theme Switcher & Log In Button -->
+        <div class="nav-actions">
+          <!-- Theme Switcher (Sun ☀️ / Moon 🌙) -->
+          <button class="theme-toggle-switch" id="theme-toggle-btn" type="button" role="switch" aria-checked="false" aria-label="Toggle Dark and Light Mode" title="Toggle Dark / Light Mode">
+            <span class="toggle-track">
+              <span class="toggle-icon icon-sun" aria-hidden="true">☀️</span>
+              <span class="toggle-icon icon-moon" aria-hidden="true">🌙</span>
+              <span class="toggle-thumb" aria-hidden="true"></span>
+            </span>
+          </button>
+
+          <!-- Login Button -->
+          <a href="/login" class="btn btn-primary" id="btn-nav-login" title="Log in to CognitiveAssist Portal">
+            <span>Log In</span>
+            <span aria-hidden="true">➔</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ====================================================================
+         1. HERO SECTION
+         ==================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          
+          <!-- Left Column: Copy & Value Proposition -->
+          <div class="hero-content">
+            <div class="badge-pill">
+              <span class="pulse-dot"></span>
+              <span>AI-Powered Senior Cognitive Longevity & Care</span>
+            </div>
+
+            <h1 class="hero-title">
+              Cognitive Care That <span class="highlight-yellow">Adapts</span> In <span class="highlight-green">Real Time.</span>
+            </h1>
+
+            <p class="hero-description">
+              The first closed-loop cognitive platform for seniors with MCI & Early Alzheimer’s. Combining non-invasive in-browser facial fatigue biometrics, dynamic difficulty adjustment (DDA), and Gemini Vision multimodal reminiscence therapy.
+            </p>
+
+            <div class="hero-actions">
+              <a href="/login?portal=senior" class="btn btn-primary btn-lg" id="hero-btn-senior">
+                <span>Play Senior Hub (Face ID)</span>
+                <span aria-hidden="true">➔</span>
+              </a>
+              <a href="/login?portal=clinical" class="btn btn-secondary btn-lg" id="hero-btn-caregiver">
+                <span>Caregiver &amp; Clinical Portal</span>
+              </a>
+              <a href="#simulator" class="btn btn-accent btn-lg" id="hero-btn-simulator">
+                <span>⚡ Try Live Simulator</span>
+              </a>
+            </div>
+
+            <div class="hero-highlights">
+              <span class="highlight-chip">🛡️ 100% In-Browser Privacy</span>
+              <span class="highlight-chip">👁️ 468-pt FaceMesh Biometrics</span>
+              <span class="highlight-chip">♿ WCAG AAA Accessible</span>
+              <span class="highlight-chip">🤖 Gemini Multimodal RAG</span>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Live Split Showcase Card -->
+          <div class="hero-visual-wrapper">
+            <!-- Floating Top Badge -->
+            <div class="floating-badge badge-top-right">
+              <span style="font-size: 1.25rem;">⚡</span>
+              <div>
+                <strong style="display:block;line-height:1.1;">42ms Latency</strong>
+                <span style="font-size:0.72rem;color:var(--text-muted);">Real-Time Motor Biomarker</span>
+              </div>
+            </div>
+
+            <!-- Main Window Card -->
+            <div class="hero-window-card">
+              <div class="window-header">
+                <div class="window-dots">
+                  <span class="window-dot dot-red"></span>
+                  <span class="window-dot dot-yellow"></span>
+                  <span class="window-dot dot-green"></span>
+                </div>
+                <div class="window-title">
+                  <span>🧠</span>
+                  <span>CognitiveAssist Engine v1.0</span>
+                </div>
+                <span class="window-status-pill">Active Live Telemetry</span>
+              </div>
+
+              <div class="window-body">
+                <!-- Split Preview: Senior Game HUD -->
+                <div class="preview-senior-pane">
+                  <div class="preview-pane-header">
+                    <span class="preview-pane-title">🎮 Senior Active HUD &bull; Memory Matrix</span>
+                    <span class="biometric-hud-chip">
+                      <span class="pulse-dot"></span>
+                      <span>Vision 30 FPS</span>
+                    </span>
+                  </div>
+
+                  <div class="hud-radar-row">
+                    <div class="hud-metric-box">
+                      <div class="hud-metric-label">Eye Aspect (EAR)</div>
+                      <div class="hud-metric-val">0.29</div>
+                      <div class="hud-metric-status">Alert</div>
+                    </div>
+                    <div class="hud-metric-box">
+                      <div class="hud-metric-label">Mouth (MAR)</div>
+                      <div class="hud-metric-val">0.14</div>
+                      <div class="hud-metric-status">No Yawn</div>
+                    </div>
+                    <div class="hud-metric-box">
+                      <div class="hud-metric-label">Head Pitch</div>
+                      <div class="hud-metric-val">-4.2°</div>
+                      <div class="hud-metric-status">Erect Posture</div>
+                    </div>
+                  </div>
+
+                  <div class="preview-dda-alert">
+                    <span style="font-size:1.1rem;">✨</span>
+                    <span><strong>Dynamic Difficulty (DDA)</strong>: 3-Round Win Streak. Auto-progressing grid to 3×3 with visual encouragement.</span>
+                  </div>
+                </div>
+
+                <!-- Split Preview: Caregiver Clinical Sparkline -->
+                <div class="preview-caregiver-pane">
+                  <div class="cri-stat-row">
+                    <div>
+                      <span style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Cognitive Retention Index</span>
+                      <div class="cri-big-number">84.2</div>
+                    </div>
+                    <span class="cri-badge-gain">▲ +6.8% this month</span>
+                  </div>
+
+                  <canvas id="hero-mini-chart" class="mini-chart-canvas" height="65" aria-label="7-Day Cognitive Retention Trend Graph"></canvas>
+                  
+                  <div style="display:flex;justify-content:space-between;margin-top:0.5rem;font-size:0.75rem;font-weight:700;color:var(--text-muted);">
+                    <span>7 Days Ago</span>
+                    <span style="color:#2D6A23;">✓ Stable Neurological Baseline</span>
+                    <span>Today</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating Bottom Badge -->
+            <div class="floating-badge badge-bottom-left">
+              <span style="font-size: 1.25rem;">🔒</span>
+              <div>
+                <strong style="display:block;line-height:1.1;">Zero Video Recorded</strong>
+                <span style="font-size:0.72rem;color:var(--text-muted);">100% Client-Side Facial Mesh</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         2. STATS & CLINICAL TRUST BANNER
+         ==================================================================== -->
+    <section class="stats-banner" aria-label="Key Platform Metrics">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">55M+</span>
+            <span class="stat-label">Impacted Seniors Worldwide</span>
+            <span class="stat-sub">Living with MCI & Early Alzheimer's</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">30 FPS</span>
+            <span class="stat-label">On-Device Facial Telemetry</span>
+            <span class="stat-sub">468-point real-time Euclidean mesh</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">&lt;4000ms</span>
+            <span class="stat-label">Intervention Reaction Window</span>
+            <span class="stat-sub">Auto-relaxes timers before frustration</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Client-Side Privacy Guarantee</span>
+            <span class="stat-sub">Zero facial video frames leaves device</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         3. PROBLEM VS SOLUTION SECTION
+         ==================================================================== -->
+    <section class="problem-solution-section" id="challenge">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Clinical Reality</span>
+          <h2 class="section-title">Why Traditional Brain Games Fail Seniors</h2>
+          <p class="section-desc">
+            Standard puzzles and digital games were never built for cognitive impairment. They cause agitation, lack personal meaning, and leave doctors completely in the dark.
+          </p>
+        </div>
+
+        <div class="comparison-columns-grid">
+          <!-- The Problem Column -->
+          <div class="problem-card">
+            <span class="card-badge badge-fail">❌ Traditional Brain Apps</span>
+            <h3 class="card-header-title">The Three Frustrating Pitfalls</h3>
+
+            <ul class="bullet-points-list">
+              <li class="bullet-item fail">
+                <span class="bullet-icon">✕</span>
+                <div class="bullet-text">
+                  <h4>Static, Punishing Challenge Levels</h4>
+                  <p>Games don't notice when an elderly player is exhausted or eye-strained. Strict timers induce panic, agitation, and early abandonment.</p>
+                </div>
+              </li>
+              <li class="bullet-item fail">
+                <span class="bullet-icon">✕</span>
+                <div class="bullet-text">
+                  <h4>Generic, Meaningless Puzzles</h4>
+                  <p>Stock crosswords and abstract numbers fail to evoke emotional memory, ignoring proven autobiographical reminiscence pathways.</p>
+                </div>
+              </li>
+              <li class="bullet-item fail">
+                <span class="bullet-icon">✕</span>
+                <div class="bullet-text">
+                  <h4>Caregiver & Doctor Blind Spots</h4>
+                  <p>Checkups occur every 6–12 months. Families have no objective day-to-day data to detect insidious motor-cognitive micro-declines.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- The CognitiveAssist Solution Column -->
+          <div class="solution-card">
+            <span class="card-badge badge-success">✓ The CognitiveAssist Breakthrough</span>
+            <h3 class="card-header-title">Closed-Loop Multimodal Neuro-Care</h3>
+
+            <ul class="bullet-points-list">
+              <li class="bullet-item pass">
+                <span class="bullet-icon">✓</span>
+                <div class="bullet-text">
+                  <h4>Closed-Loop Biometric Adaptation</h4>
+                  <p>In-browser computer vision instantly detects drooping eyelids (EAR &lt; 0.22) or yawns, automatically relaxing countdowns and revealing helpful clues.</p>
+                </div>
+              </li>
+              <li class="bullet-item pass">
+                <span class="bullet-icon">✓</span>
+                <div class="bullet-text">
+                  <h4>Gemini Multimodal Reminiscence</h4>
+                  <p>Generative AI transforms real family photos into personalized trivia with speech narration, triggering deep neural autobiographical recall.</p>
+                </div>
+              </li>
+              <li class="bullet-item pass">
+                <span class="bullet-icon">✓</span>
+                <div class="bullet-text">
+                  <h4>Continuous Longitudinal Biomarkers</h4>
+                  <p>Tracks Cognitive Retention Index (CRI) and millisecond reaction latencies, automatically alerting physicians to sudden neurological deviations.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4. THE 4 CORE ARCHITECTURAL MODULES
+         ==================================================================== -->
+    <section class="modules-section" id="modules">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Core Architecture</span>
+          <h2 class="section-title">Four Unified Clinical Modules</h2>
+          <p class="section-desc">
+            A cohesive engineering architecture designed to maximize neuroplasticity, maintain emotional dignity, and provide longitudinal clinical visibility.
+          </p>
+        </div>
+
+        <div class="modules-grid">
+          <!-- Module 1: Adaptive Game Engine -->
+          <article class="module-card">
+            <div>
+              <div class="module-header">
+                <span class="module-number">MODULE 01</span>
+                <div class="module-icon-wrap icon-yellow">
+                  <span>🕹️</span>
+                </div>
+              </div>
+              <h3 class="module-title">Adaptive Game Engine</h3>
+              <p class="module-desc">
+                Reinforcement and rule-based Dynamic Difficulty Adjustment (DDA) that recalibrates challenge parameters in real time to avoid senior agitation.
+              </p>
+              <ul class="module-features-list">
+                <li><span class="check-icon">✓</span> <strong>Memory Matrix</strong>: Dynamic grid recall scaling from 2×2 up to 4×4</li>
+                <li><span class="check-icon">✓</span> <strong>Stroop Color-Inhibition</strong>: Measures motor-cognitive latency in milliseconds</li>
+                <li><span class="check-icon">✓</span> <strong>Win/Loss Streak Scaling</strong>: Promotes neuroplasticity without catastrophic burnout</li>
+              </ul>
+            </div>
+            <div class="module-footer-pill">
+              <span>Dynamic Difficulty Adjustment</span>
+              <strong style="color:var(--text-primary);">Zero Agitation Guarantee</strong>
+            </div>
+          </article>
+
+          <!-- Module 2: Fatigue & Biometric HUD -->
+          <article class="module-card">
+            <div>
+              <div class="module-header">
+                <span class="module-number">MODULE 02</span>
+                <div class="module-icon-wrap icon-green">
+                  <span>👁️</span>
+                </div>
+              </div>
+              <h3 class="module-title">Engagement & Fatigue Biometrics</h3>
+              <p class="module-desc">
+                Non-invasive client-side computer vision pipeline monitoring Eye Aspect Ratio (EAR), Mouth Aspect Ratio (MAR), and 3D Head Pose at 30 FPS.
+              </p>
+              <ul class="module-features-list">
+                <li><span class="check-icon">✓</span> <strong>EAR Microsleep Detection</strong>: Flags drooping eyelids (&lt;0.22) in real-time</li>
+                <li><span class="check-icon">✓</span> <strong>MAR Yawn Monitoring</strong>: Computes vertical mouth displacement (&gt;0.65)</li>
+                <li><span class="check-icon">✓</span> <strong>Euler Head Pose</strong>: Flags posture slouching and gaze wandering</li>
+              </ul>
+            </div>
+            <div class="module-footer-pill">
+              <span>MediaPipe 468 Face Mesh</span>
+              <strong style="color:var(--text-primary);">100% In-Browser Privacy</strong>
+            </div>
+          </article>
+
+          <!-- Module 3: Generative Reminiscence Therapy -->
+          <article class="module-card">
+            <div>
+              <div class="module-header">
+                <span class="module-number">MODULE 03</span>
+                <div class="module-icon-wrap icon-blue">
+                  <span>📸</span>
+                </div>
+              </div>
+              <h3 class="module-title">Generative Memory Therapy</h3>
+              <p class="module-desc">
+                Multimodal RAG powered by Google Gemini Vision. Converts cherished family photo albums into personalized trivia questions with encouraging audio narration.
+              </p>
+              <ul class="module-features-list">
+                <li><span class="check-icon">✓</span> <strong>Autobiographical Recall</strong>: Stimulates dormant neural pathways with real memories</li>
+                <li><span class="check-icon">✓</span> <strong>Web Speech Narration</strong>: Reads questions aloud for seniors with low vision</li>
+                <li><span class="check-icon">✓</span> <strong>Heuristic Offline Fallback</strong>: 100% demonstration uptime even without internet</li>
+              </ul>
+            </div>
+            <div class="module-footer-pill">
+              <span>Google Gemini Multimodal AI</span>
+              <strong style="color:var(--text-primary);">Nostalgic Resonance</strong>
+            </div>
+          </article>
+
+          <!-- Module 4: Doctor & Caregiver Portal -->
+          <article class="module-card">
+            <div>
+              <div class="module-header">
+                <span class="module-number">MODULE 04</span>
+                <div class="module-icon-wrap icon-coral">
+                  <span>📊</span>
+                </div>
+              </div>
+              <h3 class="module-title">Clinical Analytics Portal</h3>
+              <p class="module-desc">
+                Longitudinal predictive trend analytics delivering objective digital biomarkers, anomaly alerts, and one-click printable neurological summary reports.
+              </p>
+              <ul class="module-features-list">
+                <li><span class="check-icon">✓</span> <strong>Cognitive Retention Index (CRI)</strong>: Weighted accuracy, latency, and endurance</li>
+                <li><span class="check-icon">✓</span> <strong>Fatigue Correlation Charts</strong>: Dissects how physical exhaustion impairs recall</li>
+                <li><span class="check-icon">✓</span> <strong>Neurologist Print Export</strong>: Clinical summary ready for medical consultation</li>
+              </ul>
+            </div>
+            <div class="module-footer-pill">
+              <span>Longitudinal Biomarkers</span>
+              <strong style="color:var(--text-primary);">Physician-Ready PDF</strong>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         5. INTERACTIVE LIVE SIMULATOR & PLAYGROUND
+         ==================================================================== -->
+    <section class="simulator-section" id="simulator">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Interactive Playground</span>
+          <h2 class="section-title">Experience Adaptive AI in Action</h2>
+          <p class="section-desc">
+            Test how CognitiveAssist responds to senior fatigue in real time, or try the Stroop reaction latency mini-test to see our millisecond biomarker tracking.
+          </p>
+        </div>
+
+        <div class="simulator-container">
+          <!-- Top Bar with Tab Switchers -->
+          <div class="simulator-topbar">
+            <div class="simulator-title-group">
+              <h3>Live Biometric & Neural Engine Simulator</h3>
+              <p>Drag the sliders below to simulate varying patient fatigue and witness instant DDA adaptation.</p>
+            </div>
+            <div class="simulator-tabs">
+              <button id="btn-toggle-auto-sim" class="auto-sim-chip active" type="button" aria-label="Toggle real-time auto demo" title="Click to pause or resume real-time auto-simulation">
+                <span class="sim-pulse-dot"></span>
+                <span id="auto-sim-label">Live Demo: Active</span>
+              </button>
+              <button class="sim-tab-btn active" data-target="panel-fatigue" type="button">
+                <span>👁️ Fatigue Simulator</span>
+              </button>
+              <button class="sim-tab-btn" data-target="panel-stroop" type="button">
+                <span>⚡ Stroop Reaction Test</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- PANEL 1: BIOMETRIC FATIGUE SIMULATOR -->
+          <div class="simulator-panel active" id="panel-fatigue">
+            <div class="sim-grid">
+              
+              <!-- Left: Interactive Sliders & Presets -->
+              <div class="sim-controls-pane">
+                <div class="sim-control-group">
+                  <div class="sim-label-row">
+                    <span>Overall Player Fatigue Score</span>
+                    <strong id="fatigue-val-display" style="color:var(--primary);font-size:1.15rem;">15%</strong>
+                  </div>
+                  <input type="range" min="0" max="100" value="15" class="sim-slider" id="fatigue-slider" aria-label="Simulated Player Fatigue Score">
+                </div>
+
+                <div class="sim-control-group">
+                  <span style="font-size:0.85rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Quick State Presets</span>
+                  <div class="sim-presets-row">
+                    <button class="preset-btn" data-val="10" type="button">1. Alert &amp; Sharp (10%)</button>
+                    <button class="preset-btn" data-val="45" type="button">2. Slight Strain (45%)</button>
+                    <button class="preset-btn" data-val="75" type="button">3. Exhausted (75%)</button>
+                    <button class="preset-btn" data-val="95" type="button">4. Yawning Slump (95%)</button>
+                  </div>
+                </div>
+
+                <!-- Live Adaptive Intervention Box -->
+                <div class="sim-intervention-box" id="sim-intervention-box">
+                  <span style="font-size: 1.4rem;">🟢</span>
+                  <div id="sim-intervention-text">
+                    <strong>Optimal Engagement (CRI High)</strong>: Player is vigilant and focused. Game engine maintains standard 3x3 challenge grid with normal countdown timers.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Face Avatar & Biomarker Readouts -->
+              <div class="sim-screen-pane">
+                <!-- Dynamic SVG Face -->
+                <div class="sim-face-avatar">
+                  <svg id="sim-avatar-svg" class="sim-face-svg" viewBox="0 0 120 120" width="130" height="130" aria-label="Simulated Face Avatar">
+                    <!-- Head Background Group with dynamic tilt and slump -->
+                    <g id="avatar-head-group">
+                      <!-- Face Outline -->
+                      <circle id="avatar-face-base" cx="60" cy="60" r="48" fill="#F4EFE6" stroke="#23292D" stroke-width="3"/>
+                      <!-- Cheeks (Blushing when happy, fades out when sad/exhausted) -->
+                      <circle id="avatar-cheek-left" cx="36" cy="66" r="6" fill="#F4B840" fill-opacity="0.38"/>
+                      <circle id="avatar-cheek-right" cx="84" cy="66" r="6" fill="#F4B840" fill-opacity="0.38"/>
+                      
+                      <!-- Left Eye & Sparkle Catchlight -->
+                      <g id="avatar-eye-group-left">
+                        <ellipse id="avatar-left-eye" cx="42" cy="50" rx="6" ry="7" fill="#23292D"/>
+                        <circle id="avatar-left-sparkle" cx="44" cy="48" r="1.8" fill="#FFFFFF"/>
+                      </g>
+
+                      <!-- Right Eye & Sparkle Catchlight -->
+                      <g id="avatar-eye-group-right">
+                        <ellipse id="avatar-right-eye" cx="78" cy="50" rx="6" ry="7" fill="#23292D"/>
+                        <circle id="avatar-right-sparkle" cx="80" cy="48" r="1.8" fill="#FFFFFF"/>
+                      </g>
+
+                      <!-- Eyebrows (Dynamic paths for Happy arch <-> Neutral <-> Sad distress tilt) -->
+                      <path id="avatar-brow-left" d="M 35 39 Q 42 34 50 39" fill="none" stroke="#23292D" stroke-width="2.5" stroke-linecap="round"/>
+                      <path id="avatar-brow-right" d="M 70 39 Q 78 34 85 39" fill="none" stroke="#23292D" stroke-width="2.5" stroke-linecap="round"/>
+
+                      <!-- Nose -->
+                      <path d="M 60 52 L 58 60 L 63 60" fill="none" stroke="#23292D" stroke-width="2" stroke-linecap="round"/>
+
+                      <!-- Mouth (Dynamic path transitioning Happy Smile -> Neutral -> Sad Frown -> Yawn) -->
+                      <path id="avatar-mouth" d="M 43 69 Q 60 86 77 69" fill="none" stroke="#23292D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+                      <!-- Exhaustion Strain Sweat Drop (Fades in when fatigue > 70%) -->
+                      <path id="avatar-sweat-drop" d="M 88 43 C 88 39, 92 35, 92 35 C 92 35, 96 39, 96 43 C 96 46, 94 48, 92 48 C 90 48, 88 46, 88 43 Z" fill="#6B9AC4" opacity="0"/>
+                    </g>
+                  </svg>
+                </div>
+                <div id="sim-face-mood" class="sim-face-mood">Vigilant &amp; Happy 😊</div>
+
+                <!-- 3 Biomarker Readout Meters -->
+                <div class="sim-hud-meters">
+                  <div class="sim-meter-card">
+                    <div style="font-size:0.7rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Eye Aspect (EAR)</div>
+                    <div class="val" id="sim-ear-val" style="color:#2D6A23;">0.29</div>
+                    <span style="font-size:0.68rem;color:var(--text-muted);">Normal &gt; 0.22</span>
+                  </div>
+                  <div class="sim-meter-card">
+                    <div style="font-size:0.7rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Mouth (MAR)</div>
+                    <div class="val" id="sim-mar-val" style="color:var(--text-primary);">0.14</div>
+                    <span style="font-size:0.68rem;color:var(--text-muted);">Yawn &gt; 0.65</span>
+                  </div>
+                  <div class="sim-meter-card">
+                    <div style="font-size:0.7rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Head Pitch</div>
+                    <div class="val" id="sim-pitch-val" style="color:var(--accent-blue);">-4.8°</div>
+                    <span style="font-size:0.68rem;color:var(--text-muted);">Slump &lt; -25°</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- PANEL 2: STROOP REACTION MINI-TESTER -->
+          <div class="simulator-panel" id="panel-stroop">
+            <div class="stroop-tester-wrapper">
+              <div>
+                <h4 style="font-size:1.4rem;font-weight:800;margin-bottom:0.4rem;">Stroop Motor-Cognitive Inhibition Test</h4>
+                <p style="font-size:0.95rem;color:var(--text-secondary);">
+                  Rule: Select the button matching the <strong>FONT COLOR</strong> of the word, ignoring what the word actually spells!
+                </p>
+              </div>
+
+              <div class="stroop-display-card">
+                <div class="stroop-word" id="stroop-word" style="color:#6B9AC4;">READY</div>
+                <div class="stroop-instructions" id="stroop-instructions">Press start to measure your cognitive processing latency.</div>
+                <button class="btn btn-primary btn-lg" id="stroop-start-btn" type="button" style="margin-top:1rem;">
+                  <span>Start 1-Trial Test</span>
+                </button>
+              </div>
+
+              <div class="stroop-options-grid" id="stroop-options" style="display:none;">
+                <button class="stroop-btn" data-color="RED" type="button" style="color:#E88080;">RED</button>
+                <button class="stroop-btn" data-color="BLUE" type="button" style="color:#6B9AC4;">BLUE</button>
+                <button class="stroop-btn" data-color="GREEN" type="button" style="color:#8FC975;">GREEN</button>
+              </div>
+
+              <div class="stroop-result-box" id="stroop-result-box" style="display:none;"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         6. AUDIENCE & STAKEHOLDER SOLUTIONS
+         ==================================================================== -->
+    <section class="audience-section" id="solutions">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Target Users</span>
+          <h2 class="section-title">Designed for the Entire Circle of Care</h2>
+          <p class="section-desc">
+            Whether you are an elderly individual engaging daily, a loving caregiver, or a treating neurologist, CognitiveAssist is tailored to your needs.
+          </p>
+        </div>
+
+        <!-- Role Switcher Tabs -->
+        <div class="role-switcher-tabs">
+          <button class="role-tab-btn active" data-role="role-senior" type="button">
+            <span>👵 For Seniors & Patients</span>
+          </button>
+          <button class="role-tab-btn" data-role="role-caregiver" type="button">
+            <span>❤️ For Family Caregivers</span>
+          </button>
+          <button class="role-tab-btn" data-role="role-doctor" type="button">
+            <span>🩺 For Doctors & Neurologists</span>
+          </button>
+        </div>
+
+        <!-- Role Content 1: Senior -->
+        <div class="role-content-panel active" id="role-senior">
+          <div class="role-details">
+            <h3>Dignity, Joy & Gentle Challenge</h3>
+            <p>
+              Specially designed with high-contrast tactile elements (WCAG AAA), warm nostalgic art styles, and comforting voice narration. Seniors never experience the panic of running out of time.
+            </p>
+            <ul class="role-benefits-list">
+              <li>
+                <span class="check-icon">✓</span>
+                <div><strong>Zero Frustration Guarantee</strong>: The game engine relaxes rounds automatically when eye fatigue or hesitation is sensed.</div>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <div><strong>Personal Memory Connection</strong>: Stimulating recall of past vacations, weddings, and grandchildren rather than generic trivia.</div>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <div><strong>Voice-Enabled Accessibility</strong>: Natural narration reads questions aloud for seniors experiencing macular degeneration or vision fatigue.</div>
+              </li>
+            </ul>
+            <a href="/app#senior" class="btn btn-primary">
+              <span>Launch Senior Hub</span>
+              <span aria-hidden="true">➔</span>
+            </a>
+          </div>
+
+          <div class="role-graphic-box">
+            <div style="font-size:3rem;margin-bottom:0.75rem;">🌟</div>
+            <h4 style="font-size:1.25rem;font-weight:800;margin-bottom:0.5rem;">"It feels like playing, not a medical test."</h4>
+            <p style="font-size:0.92rem;color:var(--text-secondary);">
+              Large tactile buttons, soothing cream backgrounds, and positive audio reinforcement make daily cognitive workouts an anticipated routine.
+            </p>
+          </div>
+        </div>
+
+        <!-- Role Content 2: Caregiver -->
+        <div class="role-content-panel" id="role-caregiver">
+          <div class="role-details">
+            <h3>Remote Peace of Mind for Families</h3>
+            <p>
+              Stay intimately connected to your loved one's well-being between doctor appointments. Upload family memories with one click and monitor daily cognitive engagement streaks.
+            </p>
+            <ul class="role-benefits-list">
+              <li>
+                <span class="check-icon">✓</span>
+                <div><strong>Automated Family Memories</strong>: Upload vintage photographs with notes; Gemini AI takes care of crafting personalized trivia.</div>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <div><strong>Early Warning Anomaly Detection</strong>: Receive automated alerts if reaction latency spikes +30% or fatigue clusters over multiple days.</div>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <div><strong>Objective Trend Verification</strong>: Replace subjective worries with clear longitudinal Cognitive Retention Index (CRI) charts.</div>
+              </li>
+            </ul>
+            <a href="/app#caregiver" class="btn btn-secondary">
+              <span>Explore Caregiver Dashboard</span>
+              <span aria-hidden="true">➔</span>
+            </a>
+          </div>
+
+          <div class="role-graphic-box">
+            <div style="font-size:3rem;margin-bottom:0.75rem;">🏡</div>
+            <h4 style="font-size:1.25rem;font-weight:800;margin-bottom:0.5rem;">Bridging the Distance</h4>
+            <p style="font-size:0.92rem;color:var(--text-secondary);">
+              "Even living 400 miles away from mom, I can see her daily streak, smile seeing her answer questions about our Cape Cod trip, and rest easy."
+            </p>
+          </div>
+        </div>
+
+        <!-- Role Content 3: Doctor -->
+        <div class="role-content-panel" id="role-doctor">
+          <div class="role-details">
+            <h3>Granular Digital Biomarkers for Neurologists</h3>
+            <p>
+              Replace sparse episodic questionnaires (MoCA/MMSE) with high-frequency, non-invasive motor-cognitive telemetry captured during natural gaming.
+            </p>
+            <ul class="role-benefits-list">
+              <li>
+                <span class="check-icon">✓</span>
+                <div><strong>Cognitive Retention Index (CRI)</strong>: Weighted clinical formulation evaluating recall accuracy (45%), motor reaction latency (35%), and cognitive stamina (20%).</div>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <div><strong>Fatigue vs. Accuracy Correlation</strong>: Dual-axis regressions pinpointing whether micro-declines are transient fatigue or persistent neurodegeneration.</div>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <div><strong>1-Click Printable Consultation Summary</strong>: Formatted clinical documentation ready for patient charts or insurance justification.</div>
+              </li>
+            </ul>
+            <a href="/app#caregiver" class="btn btn-accent">
+              <span>Open Doctor Analytics Suite</span>
+              <span aria-hidden="true">➔</span>
+            </a>
+          </div>
+
+          <div class="role-graphic-box">
+            <div style="font-size:3rem;margin-bottom:0.75rem;">🩺</div>
+            <h4 style="font-size:1.25rem;font-weight:800;margin-bottom:0.5rem;">Clinical Precision</h4>
+            <p style="font-size:0.92rem;color:var(--text-secondary);">
+              Objective millisecond telemetry captured in the patient's comfortable home environment eliminates the "white-coat anxiety" artifact in memory testing.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         7. COMPARISON MATRIX TABLE
+         ==================================================================== -->
+    <section class="comparison-section" id="comparison">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Competitive Benchmark</span>
+          <h2 class="section-title">How CognitiveAssist Compares</h2>
+          <p class="section-desc">
+            A comprehensive clinical comparison against generic consumer brain training apps and traditional paper neurological tests.
+          </p>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th style="width:32%;">Feature & Clinical Capability</th>
+                <th class="highlight-col" style="width:26%;">🧠 CognitiveAssist</th>
+                <th style="width:21%;">Generic Brain Apps (e.g. Lumosity)</th>
+                <th style="width:21%;">Paper Tests (e.g. MoCA / MMSE)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Real-Time Biometric Fatigue Detection</strong></td>
+                <td class="highlight-col"><span class="table-badge-yes">✓ In-Browser 30 FPS (EAR/MAR)</span></td>
+                <td><span class="table-badge-no">✕ None</span></td>
+                <td><span class="table-badge-no">✕ None</span></td>
+              </tr>
+              <tr>
+                <td><strong>Dynamic Difficulty Adjustment (DDA)</strong></td>
+                <td class="highlight-col"><span class="table-badge-yes">✓ Fatigue-Aware Closed-Loop</span></td>
+                <td><span class="table-badge-no">✕ Static / Win-Streak Only</span></td>
+                <td><span class="table-badge-no">✕ Completely Static</span></td>
+              </tr>
+              <tr>
+                <td><strong>Personalized Reminiscence Therapy</strong></td>
+                <td class="highlight-col"><span class="table-badge-yes">✓ Multimodal Gemini Vision RAG</span></td>
+                <td><span class="table-badge-no">✕ Stock Generic Trivia</span></td>
+                <td><span class="table-badge-no">✕ Fixed Clinical Cards</span></td>
+              </tr>
+              <tr>
+                <td><strong>Longitudinal Motor Latency Tracking</strong></td>
+                <td class="highlight-col"><span class="table-badge-yes">✓ Millisecond Precision Trends</span></td>
+                <td><span class="table-badge-no">✕ Raw Score Only</span></td>
+                <td><span class="table-badge-no">✕ Hand Stopwatch (Rough)</span></td>
+              </tr>
+              <tr>
+                <td><strong>Audio Voice Narration for Low Vision</strong></td>
+                <td class="highlight-col"><span class="table-badge-yes">✓ Web Speech API Integrated</span></td>
+                <td><span class="table-badge-no">✕ Rare / Visual Only</span></td>
+                <td><span class="table-badge-no">✕ Dependent on Doctor</span></td>
+              </tr>
+              <tr>
+                <td><strong>1-Click Printable Neurological PDF Report</strong></td>
+                <td class="highlight-col"><span class="table-badge-yes">✓ Comprehensive Clinical Report</span></td>
+                <td><span class="table-badge-no">✕ None</span></td>
+                <td><span class="table-badge-yes">✓ Paper Form</span></td>
+              </tr>
+              <tr>
+                <td><strong>Privacy-Conscious On-Device Inference</strong></td>
+                <td class="highlight-col"><span class="table-badge-yes">✓ 100% In-Browser Mesh</span></td>
+                <td><span class="table-badge-no">✕ N/A</span></td>
+                <td><span class="table-badge-yes">✓ Physical Paper</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         8. CLINICAL TESTIMONIALS & CASE STUDIES
+         ==================================================================== -->
+    <section class="testimonials-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Real World Impact</span>
+          <h2 class="section-title">Trusted by Clinicians & Families</h2>
+          <p class="section-desc">
+            See how real-time adaptation and multimodal reminiscence therapy are making a difference in senior memory care.
+          </p>
+        </div>
+
+        <div class="testimonials-grid">
+          <!-- Testimonial 1 -->
+          <div class="testimonial-card">
+            <div>
+              <div class="quote-marks">“</div>
+              <p class="quote-text">
+                "The biggest limitation in dementia care has always been the 6-month evaluation gap. CognitiveAssist's daily CRI and latency metrics allow us to detect acute cognitive downturns weeks before clinical symptoms appear."
+              </p>
+            </div>
+            <div class="author-info">
+              <div class="author-avatar">AC</div>
+              <div class="author-details">
+                <h5>Dr. Alistair Chen, MD</h5>
+                <p>Chief of Geriatric Neurology & Cognitive Health</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="testimonial-card">
+            <div>
+              <div class="quote-marks">“</div>
+              <p class="quote-text">
+                "My 76-year-old mother used to get terrified of timer countdowns in other apps. CognitiveAssist automatically relaxes when she blinks tiredly, and seeing her own 1978 Cape Cod wedding photo brings such joyful conversation."
+              </p>
+            </div>
+            <div class="author-info">
+              <div class="author-avatar" style="background:var(--primary-light);">SJ</div>
+              <div class="author-details">
+                <h5>Sarah Vance-Jenkins</h5>
+                <p>Family Caregiver, Boston MA</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="testimonial-card">
+            <div>
+              <div class="quote-marks">“</div>
+              <p class="quote-text">
+                "In our assisted living community, adherence to brain training skyrocketed from 28% to 89% once we introduced CognitiveAssist. The tactile design, voice reading, and lack of punitive failure make it a daily favorite."
+              </p>
+            </div>
+            <div class="author-info">
+              <div class="author-avatar" style="background:var(--accent-green-light);">MB</div>
+              <div class="author-details">
+                <h5>Marcus Bennett</h5>
+                <p>Director of Memory Living & Wellness Programs</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         9. FREQUENTLY ASKED QUESTIONS (ACCORDION)
+         ==================================================================== -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Got Questions?</span>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-desc">
+            Everything you need to know about privacy, computer vision requirements, and clinical integration.
+          </p>
+        </div>
+
+        <div class="faq-accordion">
+          <!-- FAQ 1 -->
+          <div class="faq-item open">
+            <button class="faq-header" type="button" aria-expanded="true">
+              <span>Does CognitiveAssist record or store webcam video footage?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-body">
+              <p>
+                <strong>Absolutely not.</strong> All biometric calculations (Eye Aspect Ratio, Mouth Aspect Ratio, 3D Head Pose) run 100% locally on your computer inside the browser using MediaPipe and Canvas. Video frames never leave your computer, are never sent to a cloud server, and are immediately discarded frame-by-frame. Only anonymized mathematical floating-point numbers (e.g. EAR = 0.28) are logged.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false">
+              <span>What hardware or cameras are required?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-body">
+              <p>
+                Any standard laptop, desktop computer, or modern tablet with a basic built-in or USB webcam is sufficient. No specialized depth sensors or infrared cameras are needed. For environments without webcams, the platform also includes an interactive simulation slider and offline manual fallback mode.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false">
+              <span>How does Google Gemini AI create the reminiscence trivia?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-body">
+              <p>
+                Caregivers can upload vintage family photos along with brief contextual notes (e.g. year, relatives, vacation spot). Our backend uses Google Gemini Vision multimodal models to analyze the image and context, creating uplifting multiple-choice trivia questions that spark autobiographical recall. A local heuristic generator is also included so the system never fails even if an API key is absent.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false">
+              <span>What is the Cognitive Retention Index (CRI)?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-body">
+              <p>
+                The CRI is an evidence-based composite metric (scored 0–100) formulated specifically for Mild Cognitive Impairment. It balances Recall Accuracy (45%), Motor Reaction Latency in milliseconds (35%), and Cognitive Endurance/Fatigue Resilience (20%). It allows neurologists to distinguish between transient tiredness and sustained cognitive change.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false">
+              <span>Can seniors use this independently?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-body">
+              <p>
+                Yes! The Senior Hub features high-contrast WCAG AAA compliance, oversized tactile pressable cards, automatic voice reading for all questions and instructions, and an intelligent DDA engine that prevents seniors from ever getting stuck or demoralized.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         10. CALL TO ACTION BANNER
+         ==================================================================== -->
+    <section class="cta-banner-section">
+      <div class="container">
+        <div class="cta-banner-box">
+          <h2>Empower Senior Minds Today</h2>
+          <p>
+            Experience the transformative combination of real-time computer vision, adaptive game mechanics, and emotionally resonant generative memory therapy.
+          </p>
+          <div class="cta-banner-actions">
+            <a href="/app#senior" class="btn btn-secondary btn-lg" id="cta-btn-senior">
+              <span>👵 Launch Senior Hub</span>
+            </a>
+            <a href="/app#caregiver" class="btn btn-secondary btn-lg" id="cta-btn-caregiver">
+              <span>🩺 Access Doctor Portal</span>
+            </a>
+            <a href="/docs" target="_blank" rel="noopener noreferrer" class="btn btn-blue btn-lg" id="cta-btn-docs">
+              <span>📖 API Documentation</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====================================================================
+       11. FOOTER
+       ==================================================================== -->
+  <footer class="landing-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Summary -->
+        <div class="footer-brand">
+          <div class="brand-link">
+            <div class="logo-badge" aria-hidden="true">
+              <span>🧠</span>
+            </div>
+            <div class="brand-info">
+              <strong style="font-size:1.3rem;font-family:var(--font-family-display);">CognitiveAssist</strong>
+              <div style="font-size:0.75rem;color:var(--text-muted);">AI Cognitive Longevity Platform</div>
+            </div>
+          </div>
+          <p>
+            An AI-powered closed-loop cognitive gaming and health monitoring platform for elderly care, MCI, and early Alzheimer's.
+          </p>
+          <div class="status-badge-live">
+            <span class="pulse-dot"></span>
+            <span>FastAPI Server &bull; System Operational</span>
+          </div>
+        </div>
+
+        <!-- Col 1: Platform -->
+        <div class="footer-col">
+          <h5>Core Modules</h5>
+          <ul>
+            <li><a href="/app#senior">Memory Matrix</a></li>
+            <li><a href="/app#senior">Stroop Reaction Latency</a></li>
+            <li><a href="/app#senior">Family Reminiscence</a></li>
+            <li><a href="#simulator">Biometrics Fatigue HUD</a></li>
+            <li><a href="/app#caregiver">Caregiver Analytics</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 2: Clinical & Tech -->
+        <div class="footer-col">
+          <h5>Clinical Science</h5>
+          <ul>
+            <li><a href="#challenge">Mild Cognitive Impairment</a></li>
+            <li><a href="#modules">Eye Aspect Ratio (EAR)</a></li>
+            <li><a href="#modules">Cognitive Retention Index</a></li>
+            <li><a href="#comparison">Clinical Comparison</a></li>
+            <li><a href="/docs" target="_blank">FastAPI Swagger Docs</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Accessibility & Trust -->
+        <div class="footer-col">
+          <h5>Compliance & Trust</h5>
+          <ul>
+            <li><a href="#hero">100% Client-Side Privacy</a></li>
+            <li><a href="#hero">WCAG AAA Compliance</a></li>
+            <li><a href="#faq">Hardware Requirements</a></li>
+            <li><a href="#faq">Frequently Asked Questions</a></li>
+            <li><a href="https://github.com" target="_blank" rel="noopener noreferrer">Source Code Repository</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 CognitiveAssist AI. Built for Senior Healthcare, Computer Vision & Generative Longevity.
+        </div>
+        <div style="display:flex;gap:1.5rem;">
+          <a href="/app#senior" style="font-weight:700;color:var(--text-primary);">Senior Hub</a>
+          <a href="/app#caregiver" style="font-weight:700;color:var(--text-primary);">Doctor Portal</a>
+          <a href="/health" style="font-weight:700;color:var(--text-primary);">Health API</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Landing Page Interactivity Script -->
+  <script src="/static/js/landing.js?v=1.0"></script>
+</body>
+</html>

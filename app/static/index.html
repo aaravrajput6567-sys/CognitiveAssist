@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="/static/css/style.css?v=3.1">
+  <link rel="stylesheet" href="/static/css/style.css?v=3.2">
   
   <!-- Chart.js for Caregiver Analytics -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -27,23 +27,38 @@
   <!-- Accessible Navigation Header -->
   <header class="app-header">
     <div class="brand-container">
-      <div class="logo-badge" aria-hidden="true">
-        <span class="logo-icon">🧠</span>
-      </div>
-      <div class="brand-titles">
-        <h1>CognitiveAssist</h1>
-      </div>
+      <a href="/" class="brand-home-link" title="CognitiveAssist - Back to Product Overview">
+        <div class="logo-badge" aria-hidden="true">
+          <span class="logo-icon">🧠</span>
+        </div>
+        <div class="brand-titles">
+          <h1>CognitiveAssist</h1>
+        </div>
+      </a>
+      <a href="/" class="btn-back-to-landing" title="View Landing Page & Platform Overview">
+        <span>← Overview</span>
+      </a>
     </div>
 
     <!-- View Switcher -->
     <nav class="nav-tabs" aria-label="Main Navigation">
-      <button class="tab-btn active" data-view="senior-portal" id="tab-senior">
-        <span>Senior Hub</span>
+      <button class="tab-btn active" data-view="senior-portal" id="tab-senior" aria-label="Switch to Senior Hub">
+        <span>👵 Senior Hub</span>
       </button>
-      <button class="tab-btn" data-view="caregiver-portal" id="tab-caregiver">
-        <span>Clinical Portal</span>
+      <button class="tab-btn" data-view="caregiver-portal" id="tab-caregiver" aria-label="Switch to Caregiver & Clinical Analytics Portal">
+        <span>📊 Caregiver Portal</span>
       </button>
     </nav>
+
+    <!-- User Session Status Pill & Sign Out -->
+    <div class="user-auth-pill" id="user-auth-pill">
+      <div class="user-role-badge badge-senior" id="user-role-badge">
+        <span class="user-avatar-icon" id="user-avatar-icon">👵</span>
+        <span class="user-display-name" id="user-display-name">Eleanor Vance</span>
+        <span class="user-portal-tag" id="user-portal-tag">Senior Hub</span>
+      </div>
+      <button class="btn-logout" id="btn-logout" title="Sign out of portal">Sign Out</button>
+    </div>
 
     <!-- Accessibility Controls Bar -->
     <div class="accessibility-controls" aria-label="Accessibility Settings">
@@ -150,6 +165,38 @@
           </button>
         </div>
 
+        <!-- Game 4: Morning Routine Builder (Research Prototype) -->
+        <div class="game-card card-routine" style="border-top: 4px solid #f59e0b;">
+          <div class="card-accent-tag" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3);">Daily Routine Memory</div>
+          <div class="game-card-top">
+            <div class="game-icon-circle icon-routine" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+              <span>☀️</span>
+            </div>
+            <h3>Morning Routine Builder</h3>
+            <p>Reorder familiar morning routines with gentle pacing, friendly neighbor chats, and zero time pressure.</p>
+          </div>
+          <a href="/static/routine/index.html" class="btn btn-primary btn-large btn-routine" id="btn-launch-routine" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <span>Build Morning Routine</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
+
+        <!-- Game 5: Neighbourhood Walk (Spatial Memory Prototype) -->
+        <div class="game-card card-walk" style="border-top: 4px solid #10b981;">
+          <div class="card-accent-tag" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">Spatial Navigation</div>
+          <div class="game-card-top">
+            <div class="game-icon-circle icon-walk" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+              <span>🧭</span>
+            </div>
+            <h3>Neighbourhood Walk</h3>
+            <p>Stroll through a charming town, retrace routes at friendly junctions, and find clever shortcuts across town.</p>
+          </div>
+          <a href="/static/walk/index.html" class="btn btn-primary btn-large btn-walk" id="btn-launch-walk" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; background: #059669; border-color: #047857;">
+            <span>Begin Neighbourhood Walk</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
+
       </div>
 
       <!-- Active Game Arena (Dynamically Populated) -->
@@ -232,6 +279,11 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- 4. Morning Routine Builder Board (Research Prototype) -->
+        <div class="game-board-container" id="arena-routine" style="display:none; width:100%; min-height:85vh; padding:0;">
+          <iframe id="iframe-routine" src="/static/routine/index.html" style="width:100%; height:85vh; border:none; border-radius:16px; background-color:transparent;" title="Morning Routine Builder"></iframe>
         </div>
 
       </div>
@@ -498,12 +550,12 @@
   </div>
 
   <!-- Scripts -->
-  <script src="/static/js/cv_tracker.js?v=2.6"></script>
-  <script src="/static/js/games/memory_matrix.js?v=2.6"></script>
-  <script src="/static/js/games/reaction_stroop.js?v=2.6"></script>
-  <script src="/static/js/games/reminiscence_quiz.js?v=2.6"></script>
-  <script src="/static/js/caregiver_dashboard.js?v=2.6"></script>
-  <script src="/static/js/app.js?v=3.1"></script>
+  <script src="/static/js/cv_tracker.js?v=2.7"></script>
+  <script src="/static/js/games/memory_matrix.js?v=2.7"></script>
+  <script src="/static/js/games/reaction_stroop.js?v=2.7"></script>
+  <script src="/static/js/games/reminiscence_quiz.js?v=2.7"></script>
+  <script src="/static/js/caregiver_dashboard.js?v=2.7"></script>
+  <script src="/static/js/app.js?v=3.2"></script>
 
 </body>
 </html>

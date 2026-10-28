@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — CognitiveAssist 🧠</title>
+  <meta name="description" content="Sign in to CognitiveAssist. Choose your portal: Senior Hub for accessible memory gaming or Clinical Portal for caregiver and doctor analytics.">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/css/landing.css?v=2.2">
+</head>
+<body class="login-body">
+
+  <!-- Ambient Glowing Accents -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+
+  <!-- Minimal Header -->
+  <header class="landing-header">
+    <div class="container">
+      <nav class="nav-wrapper" aria-label="Login Header Navigation">
+        <!-- Brand Link -->
+        <a href="/" class="brand-link" id="brand-logo" aria-label="Return to CognitiveAssist Home">
+          <div class="logo-badge" aria-hidden="true">
+            <span>🧠</span>
+          </div>
+          <div class="brand-info">
+            <h1>CognitiveAssist</h1>
+            <span class="tagline">Healthcare AI Platform</span>
+          </div>
+        </a>
+
+        <!-- Right Side: Dark Mode Slider & Back to Overview -->
+        <div class="nav-actions">
+          <!-- Theme Toggle Switch -->
+          <button class="theme-toggle-switch" id="theme-toggle-btn" type="button" role="switch" aria-checked="false" aria-label="Toggle Dark and Light Mode" title="Toggle Dark / Light Mode">
+            <span class="toggle-track">
+              <span class="toggle-icon icon-sun" aria-hidden="true">☀️</span>
+              <span class="toggle-icon icon-moon" aria-hidden="true">🌙</span>
+              <span class="toggle-thumb" aria-hidden="true"></span>
+            </span>
+          </button>
+
+          <a href="/" class="btn btn-secondary btn-sm" id="btn-back-home" title="Return to Homepage">
+            <span>← Home Overview</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Login View -->
+  <main class="login-main-container">
+    <div class="container">
+      
+      <div class="login-wrapper">
+        <!-- Top Heading -->
+        <div class="login-header-box">
+          <div class="badge-pill">
+            <span class="pulse-dot"></span>
+            <span>Portal Access &amp; Authentication</span>
+          </div>
+          <h2 class="login-title">Choose Your Portal</h2>
+          <p class="login-subtitle">
+            Welcome to CognitiveAssist. Please select whether you are entering as a <strong>Senior Participant</strong> to play adaptive games or as a <strong>Clinician / Caregiver</strong> to view longitudinal telemetry.
+          </p>
+        </div>
+
+        <!-- 2 Portal Choice Cards -->
+        <div class="portal-choice-grid">
+          
+          <!-- PORTAL 1: SENIOR HUB -->
+          <div class="portal-card senior-card" id="card-senior-portal">
+            <div class="portal-card-top">
+              <div class="portal-icon-ring ring-amber" aria-hidden="true">
+                <span class="portal-icon">👵</span>
+              </div>
+              <span class="portal-badge badge-amber">Senior &bull; Patient</span>
+            </div>
+
+            <div class="portal-card-body">
+              <h3 class="portal-card-title">Senior Hub</h3>
+              <p class="portal-card-desc">
+                Accessible, high-contrast memory games designed for everyday enjoyment. Features real-time fatigue-aware assistance and voice narration.
+              </p>
+
+              <ul class="portal-features-list">
+                <li>
+                  <span class="portal-check">✓</span>
+                  <span>Tactile Memory Matrix &amp; Stroop Color games</span>
+                </li>
+                <li>
+                  <span class="portal-check">✓</span>
+                  <span>Personal family photo reminiscence trivia</span>
+                </li>
+                <li>
+                  <span class="portal-check">✓</span>
+                  <span>Zero-frustration automatic pace relaxation</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="portal-card-footer">
+              <button type="button" class="btn btn-primary btn-lg portal-btn" id="btn-open-face-id">
+                <span>Face ID Sign In</span>
+                <span class="btn-icon-right">📷</span>
+              </button>
+              <div class="demo-profile-hint">
+                <span class="demo-dot"></span>
+                <span>Senior Patient: <strong>Eleanor Vance (Biometric Face ID)</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- PORTAL 2: CLINICAL & CAREGIVER PORTAL -->
+          <div class="portal-card clinical-card" id="card-clinical-portal">
+            <div class="portal-card-top">
+              <div class="portal-icon-ring ring-blue" aria-hidden="true">
+                <span class="portal-icon">🩺</span>
+              </div>
+              <span class="portal-badge badge-blue">Caregiver &bull; Doctor</span>
+            </div>
+
+            <div class="portal-card-body">
+              <h3 class="portal-card-title">Caregiver &amp; Clinical Portal</h3>
+              <p class="portal-card-desc">
+                Longitudinal clinical telemetry and diagnostic insights for neurologists, physicians, and family caregivers.
+              </p>
+
+              <ul class="portal-features-list">
+                <li>
+                  <span class="portal-check">✓</span>
+                  <span>Cognitive Retention Index (CRI) 30-day trends</span>
+                </li>
+                <li>
+                  <span class="portal-check">✓</span>
+                  <span>Motor-cognitive latency progression in milliseconds</span>
+                </li>
+                <li>
+                  <span class="portal-check">✓</span>
+                  <span>Fatigue correlation charts &amp; printable PDF reports</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="portal-card-footer">
+              <button type="button" class="btn btn-blue btn-lg portal-btn" id="btn-open-clinical-auth">
+                <span>Caregiver / Staff Sign In</span>
+                <span class="btn-icon-right">🔑</span>
+              </button>
+              <div class="demo-profile-hint">
+                <span class="demo-dot" style="background:var(--accent-blue);"></span>
+                <span>Clinical Staff: <strong>Dr. Chen &amp; Authorized Caregivers</strong></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Privacy & Assistance Note -->
+        <div class="login-footer-info">
+          <div class="login-security-badge">
+            <span style="font-size:1.15rem;">🛡️</span>
+            <span><strong>100% In-Browser Privacy:</strong> All facial landmark and fatigue calculations execute locally on-device. No webcam video is ever stored or transmitted.</span>
+          </div>
+          <div class="login-help-links">
+            <a href="/" class="return-link">← Return to Product Overview</a>
+            <span class="link-separator">&bull;</span>
+            <a href="/docs" target="_blank" rel="noopener noreferrer" class="return-link">API &amp; System Docs</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ====================================================================
+       MODAL 1: SENIOR BIOMETRIC FACE ID AUTHENTICATION
+       ==================================================================== -->
+  <div class="auth-modal-backdrop" id="modal-face-id" aria-hidden="true" role="dialog" aria-labelledby="face-id-modal-title">
+    <div class="auth-modal-card face-id-modal-card">
+      <div class="modal-card-header">
+        <div class="modal-title-group">
+          <div class="modal-badge badge-amber">
+            <span>📷</span>
+            <span>Senior Biometric Access</span>
+          </div>
+          <h3 id="face-id-modal-title">Face ID Sign In</h3>
+          <p>Please look at your camera to sign in. No typing or passwords needed!</p>
+        </div>
+        <button class="modal-close-btn" id="btn-close-face-id" type="button" aria-label="Close Face ID Dialog">&times;</button>
+      </div>
+
+      <div class="modal-card-body">
+        <!-- Biometric Scanner Viewport -->
+        <div class="face-id-scanner-viewport" id="face-scanner-viewport">
+          <!-- Live Camera Video -->
+          <video id="face-id-video" autoplay playsinline muted></video>
+          
+          <!-- Avatar Preview (when camera is not active or simulation mode) -->
+          <div class="face-id-avatar-placeholder" id="face-avatar-placeholder">
+            <div class="avatar-silhouette">
+              <span class="avatar-emoji">👵</span>
+            </div>
+            <span class="placeholder-caption">Eleanor Vance (Patient #PT-8421)</span>
+          </div>
+
+          <!-- Animated Biometric Reticle & Scan Laser Overlay -->
+          <div class="scanner-reticle-overlay" id="scanner-reticle-overlay">
+            <div class="reticle-corner corner-tl"></div>
+            <div class="reticle-corner corner-tr"></div>
+            <div class="reticle-corner corner-bl"></div>
+            <div class="reticle-corner corner-br"></div>
+            <div class="biometric-face-oval"></div>
+            <div class="scanning-laser-line" id="scanning-laser"></div>
+          </div>
+
+          <!-- Scanning Status Pill inside viewport -->
+          <div class="scanner-status-pill" id="scanner-status-pill">
+            <span class="status-indicator-dot" id="face-status-dot"></span>
+            <span id="scanner-status-text">Ready to scan. Start camera or click instant match.</span>
+          </div>
+        </div>
+
+        <!-- Biometric Landmark Metrics HUD (Displays when scanning/matched) -->
+        <div class="face-id-metrics-hud" id="face-id-metrics-hud" style="display:none;">
+          <div class="hud-metric-chip">
+            <span class="metric-label">Landmarks</span>
+            <strong id="hud-landmarks-val">468 Pts</strong>
+          </div>
+          <div class="hud-metric-chip">
+            <span class="metric-label">Confidence</span>
+            <strong id="hud-confidence-val">99.4%</strong>
+          </div>
+          <div class="hud-metric-chip">
+            <span class="metric-label">Identity Match</span>
+            <strong id="hud-match-val" style="color:#2D6A23;">Verified</strong>
+          </div>
+        </div>
+
+        <!-- Scanner Controls -->
+        <div class="face-id-actions">
+          <button type="button" class="btn btn-primary btn-lg w-full" id="btn-start-camera">
+            <span>📷 Start Live Camera Scan</span>
+          </button>
+          
+          <button type="button" class="btn btn-secondary w-full" id="btn-instant-face-id">
+            <span>⚡ Instant Face ID Match (Eleanor Vance)</span>
+          </button>
+        </div>
+
+        <div class="face-privacy-notice">
+          <span>🔒 <strong>On-Device Privacy:</strong> Facial biometrics are processed 100% locally in your browser. No webcam video is ever recorded or transmitted to any server.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 2: CLINICAL CREDENTIALS AUTHENTICATION
+       ==================================================================== -->
+  <div class="auth-modal-backdrop" id="modal-clinical-auth" aria-hidden="true" role="dialog" aria-labelledby="clinical-modal-title">
+    <div class="auth-modal-card clinical-modal-card">
+      <div class="modal-card-header">
+        <div class="modal-title-group">
+          <div class="modal-badge badge-blue">
+            <span>🩺</span>
+            <span>Clinical &amp; Medical Staff Only</span>
+          </div>
+          <h3 id="clinical-modal-title">Clinical Portal Authentication</h3>
+          <p>Sign in with your clinical credentials to access longitudinal patient telemetry and clinical reports.</p>
+        </div>
+        <button class="modal-close-btn" id="btn-close-clinical-auth" type="button" aria-label="Close Clinical Login Dialog">&times;</button>
+      </div>
+
+      <div class="modal-card-body">
+        <form id="form-clinical-auth" novalidate>
+          
+          <!-- Staff Email / ID -->
+          <div class="form-field-group">
+            <label for="input-clinical-email" class="form-label">
+              <span>Medical Staff Email or Clinical ID</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon">📧</span>
+              <input type="email" id="input-clinical-email" class="form-control" placeholder="e.g. dr.chen@memorycare.org" value="dr.chen@memorycare.org" required autocomplete="username">
+            </div>
+          </div>
+
+          <!-- Password with Toggle -->
+          <div class="form-field-group">
+            <label for="input-clinical-password" class="form-label">
+              <span>Security Password or Clinical PIN</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔑</span>
+              <input type="password" id="input-clinical-password" class="form-control" placeholder="Enter clinical security password" value="ClinicalPass2026!" required autocomplete="current-password">
+              <button type="button" class="btn-toggle-visibility" id="btn-toggle-clinical-password" aria-label="Toggle password visibility" title="Show or hide password">
+                <span id="pass-visibility-icon">👁️</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Clinical Department / Role -->
+          <div class="form-field-group">
+            <label for="select-clinical-role" class="form-label">
+              <span>Medical Authority &amp; Department</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon">🏥</span>
+              <select id="select-clinical-role" class="form-control">
+                <option value="physician">Attending Neurologist / Physician (Dr. Chen)</option>
+                <option value="caregiver">Licensed Memory Care Specialist</option>
+                <option value="director">Geriatric Clinical Research Director</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Error Alert Banner (Hidden by default) -->
+          <div class="auth-error-banner" id="clinical-error-banner" style="display:none;" role="alert">
+            <span class="error-icon">⚠️</span>
+            <span id="clinical-error-message">Invalid clinical staff credentials.</span>
+          </div>
+
+          <!-- Pre-fill Demo Helper Button -->
+          <div class="demo-autofill-box">
+            <button type="button" class="btn-demo-autofill" id="btn-autofill-doctor">
+              <span>⚡ Pre-fill Demo Credentials (Dr. Chen)</span>
+            </button>
+            <span class="demo-hint-text">Demo Password: <code>ClinicalPass2026!</code></span>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-blue btn-lg w-full" id="btn-submit-clinical">
+            <span id="btn-submit-clinical-text">Authenticate &amp; Enter Clinical Portal</span>
+            <span aria-hidden="true">➔</span>
+          </button>
+
+        </form>
+
+        <div class="clinical-compliance-footer">
+          <span>🔒 <strong>HIPAA &bull; HITECH &bull; GDPR Compliant:</strong> Access is logged and audited for clinical session integrity.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/landing.js?v=2.3"></script>
+  <script src="/static/js/login.js?v=1.0"></script>
+</body>
+</html>

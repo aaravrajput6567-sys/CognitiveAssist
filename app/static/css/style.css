@@ -634,6 +634,8 @@ header.app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
   box-shadow: 0 4px 0px rgba(35, 41, 45, 0.06);
   transition: var(--transition-normal);
 }
@@ -754,6 +756,94 @@ header.app-header {
   border-color: var(--border-color);
   box-shadow: 2px 2px 0px var(--border-color);
   transform: translate(-1px, -1px);
+}
+
+/* User Session Status Pill & Sign Out */
+.user-auth-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.user-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border-color);
+  font-family: var(--font-family-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-subtle);
+  user-select: none;
+}
+
+.user-role-badge.badge-senior {
+  background: var(--primary-light);
+  color: #7A5708;
+}
+
+body.dark-theme .user-role-badge.badge-senior {
+  background: #382806;
+  color: #FCD34D;
+  border-color: #D97706;
+}
+
+.user-role-badge.badge-clinical {
+  background: var(--accent-blue-light);
+  color: #1A3F66;
+}
+
+body.dark-theme .user-role-badge.badge-clinical {
+  background: #10263E;
+  color: #93C5FD;
+  border-color: #3B82F6;
+}
+
+.user-avatar-icon {
+  font-size: 1.1rem;
+}
+
+.user-display-name {
+  font-weight: 800;
+}
+
+.user-portal-tag {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(35, 41, 45, 0.08);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+body.dark-theme .user-portal-tag {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.btn-logout {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-surface);
+  transition: all 0.15s ease;
+}
+
+.btn-logout:hover {
+  background: #FEECEB;
+  color: #DC2626;
+  border-color: #DC2626;
+  transform: translateY(-1px);
+}
+
+body.dark-theme .btn-logout:hover {
+  background: #3B1B1B;
+  color: #FCA5A5;
+  border-color: #DC2626;
 }
 
 /* Accessibility Controls Bar */
@@ -1439,10 +1529,14 @@ main.app-content {
    -------------------------------------------------------------------------- */
 .matrix-board {
   display: grid;
-  gap: 1.2rem;
+  gap: 1.25rem;
   justify-content: center;
-  margin: 1.5rem auto;
-  max-width: 650px;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  margin: 1.8rem auto;
+  width: fit-content;
+  max-width: 100%;
   perspective: 1000px;
 }
 
@@ -2478,4 +2572,43 @@ body.dark-theme .hud-btn-icon.btn-minimized-expand:hover {
     bottom: 12px;
     width: 300px;
   }
+}
+
+/* Navigation link back to Landing Page */
+.brand-home-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  color: inherit;
+}
+.brand-home-link:hover {
+  opacity: 0.92;
+}
+.btn-back-to-landing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  margin-left: 0.75rem;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-decoration: none;
+  box-shadow: var(--shadow-subtle);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.btn-back-to-landing:hover {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+body.dark-theme .btn-back-to-landing {
+  background: #2C3740;
+  color: #FAF7F2;
+  border-color: #0E1317;
 }

@@ -1,0 +1,15 @@
+{
+  "locale": "es",
+  "landmarks": {
+    "bakery": { "id": "bakery", "name": "Panadería", "category": "shop", "description": "Aroma a pan caliente recién horneado", "color": "#d97706" },
+    "post_office": { "id": "post_office", "name": "Oficina de Correos", "category": "service", "description": "Buzón postal clásico y brillante", "color": "#dc2626" },
+    "pond": { "id": "pond", "name": "Estanque", "category": "nature", "description": "Agua tranquila con nenúfares flotantes", "color": "#0284c7" },
+    "bus_stop": { "id": "bus_stop", "name": "Parada de Autobús", "category": "transit", "description": "Refugio con banco de madera", "color": "#4b5563" },
+    "temple": { "id": "temple", "name": "Templo", "category": "civic", "description": "Pabellón de piedra para la reflexión", "color": "#7c3aed" },
+    "school": { "id": "school", "name": "Escuela", "category": "civic", "description": "Edificio escolar con campana", "color": "#b91c1c" },
+    "pharmacy": { "id": "pharmacy", "name": "Farmacia", "category": "shop", "description": "Cruz verde y remedios herbales", "color": "#059669" },
+    "market_stall": { "id": "market_stall", "name": "Puesto de Mercado", "category": "shop", "description": "Cestas de frutas frescas", "color": "#ea580c" },
+    "library": { "id": "library", "name": "Biblioteca", "category": "civic", "description": "Grandes ventanas para lectura tranquila", "color": "#4338ca" },
+    "clocktower": { "id": "clocktower", "name": "Torre del Reloj", "category": "landmark", "description": "Campanadas marcando la hora", "color": "#b45309" }
+  }
+}

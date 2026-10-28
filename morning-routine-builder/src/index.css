@@ -1,0 +1,514 @@
+/* ==========================================================================
+   Morning Routine Builder: Senior-Accessible Design System (WCAG AAA)
+   Features:
+   - Scalable typography: Base font >= 24px, scalable to 40px
+   - Minimum touch targets >= 56px x 56px with generous spacing
+   - Three high-contrast color palettes: Dark, Light, Warm Cream
+   - Zero flashing, full reduced-motion support, tactile focus indicators
+   ========================================================================== */
+
+:root {
+  /* Font Scaling Tokens */
+  --font-base: 24px;
+  --font-heading: 32px;
+  --font-subheading: 26px;
+  --font-small: 20px;
+  --font-card: 24px;
+  --line-height: 1.5;
+
+  /* Touch Target & Spacing Tokens */
+  --touch-target-min: 56px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+
+  /* Spacing */
+  --space-xs: 8px;
+  --space-sm: 14px;
+  --space-md: 20px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+
+  /* Focus ring */
+  --focus-ring: 4px solid #F59E0B;
+  --focus-offset: 3px;
+}
+
+/* Font scale classes */
+body[data-font-size="normal"] {
+  --font-base: 24px;
+  --font-heading: 32px;
+  --font-subheading: 26px;
+  --font-small: 20px;
+  --font-card: 24px;
+}
+
+body[data-font-size="large"] {
+  --font-base: 32px;
+  --font-heading: 40px;
+  --font-subheading: 34px;
+  --font-small: 26px;
+  --font-card: 30px;
+}
+
+body[data-font-size="extralarge"] {
+  --font-base: 40px;
+  --font-heading: 50px;
+  --font-subheading: 44px;
+  --font-small: 32px;
+  --font-card: 36px;
+}
+
+/* --------------------------------------------------------------------------
+   THEME 1: High-Contrast Dark (Default)
+   Rich, calming slate & jet black with radiant amber & blue accents (7:1+ contrast)
+   -------------------------------------------------------------------------- */
+body[data-theme="dark"] {
+  --bg-app: #0B0F19;
+  --bg-surface: #1E293B;
+  --bg-surface-elevated: #334155;
+  --bg-card: #182234;
+  --bg-card-hover: #233148;
+  --bg-card-active: #2E405E;
+
+  --text-main: #FFFFFF;
+  --text-muted: #E2E8F0;
+  --text-dim: #94A3B8;
+
+  --border-strong: #64748B;
+  --border-subtle: #334155;
+  --border-focus: #FBBF24;
+
+  --accent: #F59E0B;
+  --accent-hover: #D97706;
+  --accent-text: #000000;
+
+  --brand-blue: #38BDF8;
+  --success-glow: #10B981;
+  --halo-glow: rgba(245, 158, 11, 0.45);
+  --footer-bg: #030712;
+  --footer-text: #94A3B8;
+}
+
+/* --------------------------------------------------------------------------
+   THEME 2: High-Contrast Light
+   Crisp white with deep navy text and intense high-contrast borders
+   -------------------------------------------------------------------------- */
+body[data-theme="light"] {
+  --bg-app: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F1F5F9;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #E2E8F0;
+  --bg-card-active: #CBD5E1;
+
+  --text-main: #020617;
+  --text-muted: #1E293B;
+  --text-dim: #475569;
+
+  --border-strong: #0F172A;
+  --border-subtle: #64748B;
+  --border-focus: #1E3A8A;
+
+  --accent: #1E3A8A;
+  --accent-hover: #172554;
+  --accent-text: #FFFFFF;
+
+  --brand-blue: #0284C7;
+  --success-glow: #059669;
+  --halo-glow: rgba(30, 58, 138, 0.35);
+  --footer-bg: #E2E8F0;
+  --footer-text: #1E293B;
+}
+
+/* --------------------------------------------------------------------------
+   THEME 3: Warm Cream High-Contrast
+   Gentle oatmeal/linen background with espresso text, soothing for tired eyes
+   -------------------------------------------------------------------------- */
+body[data-theme="warm"] {
+  --bg-app: #FAF7F2;
+  --bg-surface: #F3ECE1;
+  --bg-surface-elevated: #E8DCCF;
+  --bg-card: #FFFDF9;
+  --bg-card-hover: #EFE4D6;
+  --bg-card-active: #E3D3C1;
+
+  --text-main: #1C1917;
+  --text-muted: #292524;
+  --text-dim: #57534E;
+
+  --border-strong: #44403C;
+  --border-subtle: #78716C;
+  --border-focus: #B45309;
+
+  --accent: #B45309;
+  --accent-hover: #92400E;
+  --accent-text: #FFFFFF;
+
+  --brand-blue: #0369A1;
+  --success-glow: #047857;
+  --halo-glow: rgba(180, 83, 9, 0.35);
+  --footer-bg: #E7DFD5;
+  --footer-text: #44403C;
+}
+
+/* --------------------------------------------------------------------------
+   GLOBAL RESET & ACCESSIBILITY
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: var(--font-base);
+  line-height: var(--line-height);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Interactive elements default touch target */
+button, input, select, textarea, [role="button"] {
+  font-family: inherit;
+  font-size: inherit;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  touch-action: manipulation;
+}
+
+/* High Visibility Focus States */
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   LAYOUT CONTAINERS
+   -------------------------------------------------------------------------- */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 72px; /* Space for persistent footer */
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-md);
+}
+
+/* Top App Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 2px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+}
+
+.app-header-title {
+  font-size: var(--font-subheading);
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.app-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* --------------------------------------------------------------------------
+   PERSISTENT FOOTER
+   -------------------------------------------------------------------------- */
+.persistent-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  border-top: 2px solid var(--border-subtle);
+  padding: 12px var(--space-md);
+  text-align: center;
+  font-size: var(--font-small);
+  font-weight: 500;
+  z-index: 100;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   SPEECH CAPTIONS BANNER
+   -------------------------------------------------------------------------- */
+.caption-banner {
+  background-color: var(--bg-surface-elevated);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-base);
+  color: var(--text-main);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.caption-icon {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   BUTTONS
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 14px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--font-base);
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-secondary {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  border-color: var(--border-strong);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-surface-elevated);
+}
+
+.btn-large {
+  padding: 20px 32px;
+  font-size: var(--font-heading);
+  min-height: 68px;
+}
+
+.btn-icon {
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   CARD COMPONENT (Tap to place / undo)
+   -------------------------------------------------------------------------- */
+.activity-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  background-color: var(--bg-card);
+  border: 3px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.activity-card:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--brand-blue);
+  transform: translateY(-2px);
+}
+
+.activity-card:active {
+  transform: scale(0.99);
+  background-color: var(--bg-card-active);
+}
+
+.activity-card-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-surface-elevated);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  color: var(--brand-blue);
+}
+
+.activity-card-text {
+  font-size: var(--font-card);
+  font-weight: 600;
+  color: var(--text-main);
+  flex: 1;
+}
+
+/* Level 3 Guidance Halo */
+.card-halo-highlight {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 6px var(--halo-glow), 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  animation: gentlePulse 2s infinite ease-in-out;
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 4px var(--halo-glow);
+  }
+  50% {
+    box-shadow: 0 0 0 10px var(--halo-glow);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   NUMBERED SLOTS FOR RETRIEVAL
+   -------------------------------------------------------------------------- */
+.slots-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.slot-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-height: 72px;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  border: 3px dashed var(--border-strong);
+  background-color: var(--bg-surface);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.slot-item.filled {
+  border-style: solid;
+  border-color: var(--brand-blue);
+  background-color: var(--bg-card);
+  cursor: pointer;
+}
+
+.slot-number {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: var(--font-base);
+  flex-shrink: 0;
+  border: 2px solid var(--border-subtle);
+}
+
+.slot-empty-label {
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: var(--font-base);
+}
+
+/* --------------------------------------------------------------------------
+   MODAL DIALOG (Native Accessible Pattern)
+   -------------------------------------------------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  z-index: 200;
+}
+
+.modal-content {
+  background-color: var(--bg-surface);
+  border: 3px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  max-width: 650px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.modal-title {
+  font-size: var(--font-heading);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  color: var(--text-main);
+}
+
+/* Support Hint Overlay Banner */
+.support-banner {
+  background-color: var(--bg-surface-elevated);
+  border-left: 8px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.support-banner-title {
+  font-size: var(--font-subheading);
+  font-weight: 700;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.support-banner-text {
+  font-size: var(--font-base);
+  color: var(--text-main);
+}
